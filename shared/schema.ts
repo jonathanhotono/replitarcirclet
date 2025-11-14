@@ -16,3 +16,35 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+export type ObjectType = "waste-bin" | "syringe" | "dog-poop";
+
+export interface DetectedObject {
+  type: ObjectType;
+  name: string;
+  icon: string;
+  accentColor: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  role: "bot" | "user";
+  content: string;
+  timestamp: Date;
+}
+
+export interface QuickAction {
+  id: string;
+  label: string;
+  response: string;
+}
+
+export interface ObjectData {
+  type: ObjectType;
+  name: string;
+  icon: string;
+  accentColor: string;
+  greeting: string;
+  quickActions: QuickAction[];
+  responses: Record<string, string>;
+}
