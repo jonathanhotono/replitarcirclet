@@ -128,17 +128,21 @@ export default function Home() {
         <div 
           className="rounded-3xl p-8"
           style={{
-            background: "rgba(0, 0, 0, 0.4)",
+            background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
           }}
         >
           <Button
             size="lg"
-            className="w-full h-16 text-xl font-semibold"
+            className="w-full h-16 text-xl font-semibold text-white"
             onClick={() => setShowScanner(true)}
             data-testid="button-scan-qr"
+            style={{
+              backgroundColor: "#1E88E5",
+              color: "white"
+            }}
           >
             <QrCode className="w-7 h-7 mr-3" />
             Scan QR Code
@@ -149,16 +153,16 @@ export default function Home() {
         <div 
           className="rounded-3xl p-6"
           style={{
-            background: "rgba(0, 0, 0, 0.4)",
+            background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
           }}
         >
           <h2 className="text-xl font-bold text-white mb-4 text-center" data-testid="text-demo-label">
             Quick Demo
           </h2>
-          <p className="text-sm text-gray-400 mb-6 text-center">
+          <p className="text-sm text-white mb-6 text-center">
             Test without QR codes
           </p>
           
@@ -167,52 +171,55 @@ export default function Home() {
             <button
               className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "rgba(147, 51, 234, 0.15)",
-                border: "1px solid rgba(147, 51, 234, 0.3)",
-                backdropFilter: "blur(10px)"
+                backgroundColor: "#1E88E5",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                backdropFilter: "blur(10px)",
+                color: "white"
               }}
               onClick={() => startQuickDemo("graffiti")}
               data-testid="button-demo-graffiti"
             >
               <div className="text-5xl mb-3">🎨</div>
               <div className="text-white font-semibold text-lg mb-1">Graffiti</div>
-              <div className="text-purple-300 text-sm">Removal & Reporting</div>
+              <div className="text-white text-sm">Removal & Reporting</div>
             </button>
 
             {/* Syringe Card */}
             <button
               className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "rgba(249, 115, 22, 0.15)",
-                border: "1px solid rgba(249, 115, 22, 0.3)",
-                backdropFilter: "blur(10px)"
+                backgroundColor: "#1E88E5",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                backdropFilter: "blur(10px)",
+                color: "white"
               }}
               onClick={() => startQuickDemo("syringe")}
               data-testid="button-demo-syringe"
             >
               <div className="flex justify-center mb-3">
-                <Syringe className="w-12 h-12 text-orange-400" />
+                <Syringe className="w-12 h-12 text-white" />
               </div>
               <div className="text-white font-semibold text-lg mb-1">Syringe</div>
-              <div className="text-orange-300 text-sm">Safe Disposal</div>
+              <div className="text-white text-sm">Safe Disposal</div>
             </button>
 
             {/* Dog Waste Card */}
             <button
               className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
               style={{
-                background: "rgba(180, 83, 9, 0.15)",
-                border: "1px solid rgba(180, 83, 9, 0.3)",
-                backdropFilter: "blur(10px)"
+                backgroundColor: "#1E88E5",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                backdropFilter: "blur(10px)",
+                color: "white"
               }}
               onClick={() => startQuickDemo("dog-poop")}
               data-testid="button-demo-dog-poop"
             >
               <div className="flex justify-center mb-3">
-                <Dog className="w-12 h-12 text-amber-600" />
+                <Dog className="w-12 h-12 text-white" />
               </div>
               <div className="text-white font-semibold text-lg mb-1">Dog Waste</div>
-              <div className="text-amber-400 text-sm">Cleanup Guide</div>
+              <div className="text-white text-sm">Cleanup Guide</div>
             </button>
           </div>
         </div>
@@ -221,12 +228,12 @@ export default function Home() {
         <div 
           className="rounded-3xl p-6 text-center"
           style={{
-            background: "rgba(0, 0, 0, 0.3)",
+            background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.08)"
+            border: "1px solid rgba(255, 255, 255, 0.2)"
           }}
         >
-          <p className="text-sm text-gray-400" data-testid="text-instructions">
+          <p className="text-sm text-white" data-testid="text-instructions">
             For full QR demo: Print codes with text "graffiti", "syringe", or "dog-poop"
           </p>
         </div>
