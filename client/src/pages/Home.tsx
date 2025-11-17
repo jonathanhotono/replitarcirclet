@@ -7,7 +7,7 @@ import ObjectIndicator from "@/components/ObjectIndicator";
 import ChatOverlay from "@/components/ChatOverlay";
 import { getObjectByQRCode } from "@/lib/objectData";
 import { ChatMessage, ObjectData, QuickAction } from "@shared/schema";
-import logoUrl from "@assets/virvllet_1763355054178.png";
+import logoUrl from "@assets/ttt_1763355102252.png";
 
 export default function Home() {
   const [showScanner, setShowScanner] = useState(false);
