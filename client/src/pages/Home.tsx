@@ -96,76 +96,138 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center space-y-4">
-          <div className="flex justify-center mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center p-4 sm:p-6">
+      <div className="max-w-4xl w-full space-y-6">
+        {/* Header Card */}
+        <div 
+          className="rounded-3xl p-8 text-center"
+          style={{
+            background: "rgba(0, 0, 0, 0.4)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+          }}
+        >
+          <div className="flex justify-center mb-6">
             <img 
               src={logoUrl} 
               alt="Circle T Logo" 
-              className="w-32 h-32"
+              className="w-24 h-24 sm:w-32 sm:h-32"
               data-testid="img-logo"
             />
           </div>
-          <h1 className="text-3xl font-bold text-foreground" data-testid="text-app-title">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3" data-testid="text-app-title">
             Council AR Assistant
           </h1>
-          <p className="text-muted-foreground" data-testid="text-app-description">
-            Scan objects to get instant guidance and safety information
+          <p className="text-gray-300 text-lg" data-testid="text-app-description">
+            Smart Object Recognition & Guidance System
           </p>
         </div>
 
-        <Button
-          size="lg"
-          className="w-full h-14 text-lg"
-          onClick={() => setShowScanner(true)}
-          data-testid="button-scan-qr"
+        {/* Main Action Card */}
+        <div 
+          className="rounded-3xl p-8"
+          style={{
+            background: "rgba(0, 0, 0, 0.4)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+          }}
         >
-          <QrCode className="w-6 h-6 mr-2" />
-          Scan QR Code
-        </Button>
+          <Button
+            size="lg"
+            className="w-full h-16 text-xl font-semibold"
+            onClick={() => setShowScanner(true)}
+            data-testid="button-scan-qr"
+          >
+            <QrCode className="w-7 h-7 mr-3" />
+            Scan QR Code
+          </Button>
+        </div>
 
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground text-center" data-testid="text-demo-label">
-            Quick Demo (No QR code needed)
+        {/* Demo Grid */}
+        <div 
+          className="rounded-3xl p-6"
+          style={{
+            background: "rgba(0, 0, 0, 0.4)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+          }}
+        >
+          <h2 className="text-xl font-bold text-white mb-4 text-center" data-testid="text-demo-label">
+            Quick Demo
+          </h2>
+          <p className="text-sm text-gray-400 mb-6 text-center">
+            Test without QR codes
           </p>
           
-          <div className="grid gap-3">
-            <Button
-              variant="outline"
-              className="w-full justify-start h-12 hover-elevate active-elevate-2"
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {/* Graffiti Card */}
+            <button
+              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: "rgba(147, 51, 234, 0.15)",
+                border: "1px solid rgba(147, 51, 234, 0.3)",
+                backdropFilter: "blur(10px)"
+              }}
               onClick={() => startQuickDemo("graffiti")}
               data-testid="button-demo-graffiti"
             >
-              <span className="text-xl mr-3">🎨</span>
-              <span>Graffiti Demo</span>
-            </Button>
+              <div className="text-5xl mb-3">🎨</div>
+              <div className="text-white font-semibold text-lg mb-1">Graffiti</div>
+              <div className="text-purple-300 text-sm">Removal & Reporting</div>
+            </button>
 
-            <Button
-              variant="outline"
-              className="w-full justify-start h-12 hover-elevate active-elevate-2"
+            {/* Syringe Card */}
+            <button
+              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: "rgba(249, 115, 22, 0.15)",
+                border: "1px solid rgba(249, 115, 22, 0.3)",
+                backdropFilter: "blur(10px)"
+              }}
               onClick={() => startQuickDemo("syringe")}
               data-testid="button-demo-syringe"
             >
-              <Syringe className="w-5 h-5 mr-3" style={{ color: "hsl(24, 80%, 50%)" }} />
-              <span>Syringe Demo</span>
-            </Button>
+              <div className="flex justify-center mb-3">
+                <Syringe className="w-12 h-12 text-orange-400" />
+              </div>
+              <div className="text-white font-semibold text-lg mb-1">Syringe</div>
+              <div className="text-orange-300 text-sm">Safe Disposal</div>
+            </button>
 
-            <Button
-              variant="outline"
-              className="w-full justify-start h-12 hover-elevate active-elevate-2"
+            {/* Dog Waste Card */}
+            <button
+              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: "rgba(180, 83, 9, 0.15)",
+                border: "1px solid rgba(180, 83, 9, 0.3)",
+                backdropFilter: "blur(10px)"
+              }}
               onClick={() => startQuickDemo("dog-poop")}
               data-testid="button-demo-dog-poop"
             >
-              <Dog className="w-5 h-5 mr-3" style={{ color: "hsl(30, 60%, 45%)" }} />
-              <span>Dog Waste Demo</span>
-            </Button>
+              <div className="flex justify-center mb-3">
+                <Dog className="w-12 h-12 text-amber-600" />
+              </div>
+              <div className="text-white font-semibold text-lg mb-1">Dog Waste</div>
+              <div className="text-amber-400 text-sm">Cleanup Guide</div>
+            </button>
           </div>
         </div>
 
-        <div className="pt-6 border-t border-border">
-          <p className="text-xs text-muted-foreground text-center" data-testid="text-instructions">
-            For full demo: Print QR codes with text "graffiti", "syringe", or "dog-poop"
+        {/* Info Card */}
+        <div 
+          className="rounded-3xl p-6 text-center"
+          style={{
+            background: "rgba(0, 0, 0, 0.3)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.08)"
+          }}
+        >
+          <p className="text-sm text-gray-400" data-testid="text-instructions">
+            For full QR demo: Print codes with text "graffiti", "syringe", or "dog-poop"
           </p>
         </div>
       </div>
