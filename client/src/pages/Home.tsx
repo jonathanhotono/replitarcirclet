@@ -7,7 +7,7 @@ import ObjectIndicator from "@/components/ObjectIndicator";
 import ChatOverlay from "@/components/ChatOverlay";
 import { getObjectByQRCode } from "@/lib/objectData";
 import { ChatMessage, ObjectData, QuickAction } from "@shared/schema";
-import logoUrl from "@assets/generated_images/Circle_T_transparent_logo_8f632cde.png";
+import logoUrl from "@assets/circle_t_logo_1763354595048.jpeg";
 
 export default function Home() {
   const [showScanner, setShowScanner] = useState(false);
@@ -102,9 +102,9 @@ export default function Home() {
         <div 
           className="rounded-3xl p-8 text-center"
           style={{
-            background: "rgba(0, 0, 0, 0.4)",
+            background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
           }}
         >
@@ -119,7 +119,7 @@ export default function Home() {
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3" data-testid="text-app-title">
             Council AR Assistant
           </h1>
-          <p className="text-gray-300 text-lg" data-testid="text-app-description">
+          <p className="text-white text-lg" data-testid="text-app-description">
             Smart Object Recognition & Guidance System
           </p>
         </div>
