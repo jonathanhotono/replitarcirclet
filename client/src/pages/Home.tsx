@@ -7,6 +7,7 @@ import ObjectIndicator from "@/components/ObjectIndicator";
 import ChatOverlay from "@/components/ChatOverlay";
 import { getObjectByQRCode } from "@/lib/objectData";
 import { ChatMessage, ObjectData, QuickAction } from "@shared/schema";
+import logoUrl from "@assets/circle_t_logo_1763352209894.jpeg";
 
 export default function Home() {
   const [showScanner, setShowScanner] = useState(false);
@@ -97,7 +98,15 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
       <div className="max-w-md w-full space-y-8">
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-4">
+          <div className="flex justify-center mb-4">
+            <img 
+              src={logoUrl} 
+              alt="Circle T Logo" 
+              className="w-32 h-32"
+              data-testid="img-logo"
+            />
+          </div>
           <h1 className="text-3xl font-bold text-foreground" data-testid="text-app-title">
             Council AR Assistant
           </h1>
