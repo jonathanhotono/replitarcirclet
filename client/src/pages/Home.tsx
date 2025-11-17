@@ -96,16 +96,16 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col items-center justify-center p-4 sm:p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6" style={{ background: "linear-gradient(135deg, #1ca9c9 0%, #1e88a8 100%)" }}>
       <div className="max-w-4xl w-full space-y-6">
         {/* Header Card */}
         <div 
           className="rounded-3xl p-8 text-center"
           style={{
-            background: "rgba(0, 0, 0, 0.4)",
+            background: "rgba(255, 255, 255, 0.15)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
           }}
         >
           <div className="flex justify-center mb-6">
@@ -116,10 +116,10 @@ export default function Home() {
               data-testid="img-logo"
             />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3" data-testid="text-app-title">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3" data-testid="text-app-title" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
             Council AR Assistant
           </h1>
-          <p className="text-gray-300 text-lg" data-testid="text-app-description">
+          <p className="text-white text-lg" data-testid="text-app-description" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
             Smart Object Recognition & Guidance System
           </p>
         </div>
@@ -128,10 +128,10 @@ export default function Home() {
         <div 
           className="rounded-3xl p-8"
           style={{
-            background: "rgba(0, 0, 0, 0.4)",
+            background: "rgba(255, 255, 255, 0.2)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
           }}
         >
           <Button
@@ -149,16 +149,16 @@ export default function Home() {
         <div 
           className="rounded-3xl p-6"
           style={{
-            background: "rgba(0, 0, 0, 0.4)",
+            background: "rgba(255, 255, 255, 0.2)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
           }}
         >
-          <h2 className="text-xl font-bold text-white mb-4 text-center" data-testid="text-demo-label">
+          <h2 className="text-xl font-bold text-white mb-4 text-center" data-testid="text-demo-label" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
             Quick Demo
           </h2>
-          <p className="text-sm text-gray-400 mb-6 text-center">
+          <p className="text-sm text-white mb-6 text-center" style={{ opacity: 0.9, fontFamily: "system-ui, -apple-system, sans-serif" }}>
             Test without QR codes
           </p>
           
@@ -221,12 +221,12 @@ export default function Home() {
         <div 
           className="rounded-3xl p-6 text-center"
           style={{
-            background: "rgba(0, 0, 0, 0.3)",
+            background: "rgba(255, 255, 255, 0.15)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.08)"
+            border: "1px solid rgba(255, 255, 255, 0.2)"
           }}
         >
-          <p className="text-sm text-gray-400" data-testid="text-instructions">
+          <p className="text-sm text-white" data-testid="text-instructions" style={{ opacity: 0.9, fontFamily: "system-ui, -apple-system, sans-serif" }}>
             For full QR demo: Print codes with text "graffiti", "syringe", or "dog-poop"
           </p>
         </div>
