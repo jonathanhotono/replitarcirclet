@@ -24,18 +24,26 @@ export default function ChatOverlay({
 }: ChatOverlayProps) {
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-30 animate-in slide-in-from-bottom duration-300"
-      style={{ height: "33vh", maxHeight: "33vh" }}
+      className="fixed bottom-0 left-0 right-0 z-30 animate-in slide-in-from-bottom duration-300 px-4 pb-4"
+      style={{ height: "40vh", maxHeight: "40vh" }}
       data-testid="container-chat-overlay"
     >
-      <div className="h-full flex flex-col px-4 pb-4 pt-2">
-        <div className="flex items-center justify-end mb-2">
+      <div 
+        className="h-full rounded-3xl flex flex-col p-4"
+        style={{
+          background: "#1E88E5",
+          border: "1px solid white",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
+        }}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-white font-bold text-lg">{objectName}</h3>
           <Button
             size="icon"
             variant="ghost"
             onClick={onClose}
-            className="text-white hover:bg-white/20 h-8 w-8"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+            className="h-8 w-8 hover:bg-white/20"
+            style={{ backgroundColor: "rgba(255, 255, 255, 0.2)", color: "white" }}
             data-testid="button-close-chat"
           >
             <X className="w-4 h-4" />

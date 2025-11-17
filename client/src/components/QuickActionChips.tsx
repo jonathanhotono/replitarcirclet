@@ -13,20 +13,18 @@ export default function QuickActionChips({ actions, onActionClick, accentColor }
     <ScrollArea className="w-full" data-testid="container-quick-actions">
       <div className="flex gap-2 pb-2">
         {actions.map((action) => (
-          <Button
+          <button
             key={action.id}
-            size="sm"
             onClick={() => onActionClick(action)}
-            className="rounded-full px-4 shrink-0 text-white font-medium text-xs whitespace-nowrap"
+            className="rounded-full px-4 py-2 shrink-0 font-medium text-xs whitespace-nowrap bg-white transition-all hover:scale-105 active:scale-95"
             style={{
-              backgroundColor: "rgba(0, 0, 0, 0.6)",
-              border: `2px solid ${accentColor}`,
-              backdropFilter: "blur(8px)"
+              border: "2px solid #1E88E5",
+              color: "#1E88E5"
             }}
             data-testid={`button-action-${action.id}`}
           >
             {action.label}
-          </Button>
+          </button>
         ))}
       </div>
       <ScrollBar orientation="horizontal" className="h-1" />

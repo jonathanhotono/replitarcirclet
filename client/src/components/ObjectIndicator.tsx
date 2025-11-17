@@ -13,19 +13,16 @@ export default function ObjectIndicator({ objectName, icon, accentColor }: Objec
       className="fixed top-20 left-1/2 -translate-x-1/2 z-40 animate-in slide-in-from-top duration-300"
       data-testid="container-object-indicator"
     >
-      <Badge
-        className="px-4 py-2 text-base font-semibold shadow-lg"
+      <div
+        className="rounded-2xl px-6 py-3 shadow-lg bg-white flex items-center"
         style={{
-          backdropFilter: "blur(12px)",
-          backgroundColor: `${accentColor}dd`,
-          color: "white",
-          border: "none"
+          border: "2px solid #1E88E5"
         }}
       >
-        <span className="text-xl mr-2" data-testid="text-object-icon">{icon}</span>
-        <span data-testid="text-object-name">{objectName}</span>
-        <CheckCircle2 className="w-5 h-5 ml-2" data-testid="icon-check" />
-      </Badge>
+        <span className="text-2xl mr-2" data-testid="text-object-icon">{icon}</span>
+        <span className="font-bold text-lg mr-2" style={{ color: "#1E88E5" }} data-testid="text-object-name">{objectName}</span>
+        <CheckCircle2 className="w-5 h-5" style={{ color: "#1E88E5" }} data-testid="icon-check" />
+      </div>
     </div>
   );
 }

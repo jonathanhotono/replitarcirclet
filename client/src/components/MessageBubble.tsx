@@ -12,14 +12,14 @@ export default function MessageBubble({ role, content, accentColor }: MessageBub
 
   return (
     <div
-      className={`flex gap-3 ${isBot ? "flex-row" : "flex-row-reverse"} mb-4`}
+      className={`flex gap-2 ${isBot ? "flex-row" : "flex-row-reverse"} mb-3`}
       data-testid={`message-${role}`}
     >
       {isBot && (
         <Avatar className="w-8 h-8 flex-shrink-0" data-testid="avatar-bot">
           <AvatarFallback
             className="text-white"
-            style={{ backgroundColor: accentColor || "hsl(var(--primary))" }}
+            style={{ backgroundColor: "#1E88E5" }}
           >
             <Bot className="w-4 h-4" />
           </AvatarFallback>
@@ -27,15 +27,10 @@ export default function MessageBubble({ role, content, accentColor }: MessageBub
       )}
 
       <div
-        className="rounded-2xl px-4 py-3 max-w-[85%]"
-        style={{
-          backgroundColor: isBot ? "rgba(255, 255, 255, 0.9)" : accentColor || "rgba(255, 255, 255, 0.85)",
-          color: isBot ? "#000" : "#fff",
-          backdropFilter: "blur(8px)"
-        }}
+        className="rounded-2xl px-4 py-3 max-w-[80%] bg-white"
         data-testid={`bubble-${role}`}
       >
-        <p className="text-sm leading-relaxed font-medium" data-testid="text-message-content">{content}</p>
+        <p className="text-sm leading-relaxed font-medium text-gray-800" data-testid="text-message-content">{content}</p>
       </div>
     </div>
   );
