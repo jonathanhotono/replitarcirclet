@@ -104,7 +104,7 @@ export default function Home() {
           style={{
             background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            border: "1px solid white",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
           }}
         >
@@ -130,23 +130,23 @@ export default function Home() {
           style={{
             background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            border: "1px solid white",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
           }}
         >
-          <Button
-            size="lg"
-            className="w-full h-16 text-xl font-semibold text-white"
+          <button
+            className="w-full rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
             onClick={() => setShowScanner(true)}
             data-testid="button-scan-qr"
-            style={{
-              backgroundColor: "#1E88E5",
-              color: "white"
-            }}
           >
-            <QrCode className="w-7 h-7 mr-3" />
-            Scan QR Code
-          </Button>
+            <div className="flex justify-center mb-4">
+              <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center" style={{ borderColor: "#1E88E5" }}>
+                <QrCode className="w-10 h-10" style={{ color: "#1E88E5" }} />
+              </div>
+            </div>
+            <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Scan QR Code</div>
+            <div className="text-gray-700 text-sm">Start scanning objects</div>
+          </button>
         </div>
 
         {/* Demo Grid */}
@@ -155,7 +155,7 @@ export default function Home() {
           style={{
             background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
+            border: "1px solid white",
             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
           }}
         >
@@ -174,7 +174,7 @@ export default function Home() {
               data-testid="button-demo-graffiti"
             >
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center" style={{ borderColor: "#1E88E5" }}>
                   <div className="text-3xl">🎨</div>
                 </div>
               </div>
@@ -189,7 +189,7 @@ export default function Home() {
               data-testid="button-demo-syringe"
             >
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center" style={{ borderColor: "#1E88E5" }}>
                   <Syringe className="w-10 h-10" style={{ color: "#1E88E5" }} />
                 </div>
               </div>
@@ -204,7 +204,7 @@ export default function Home() {
               data-testid="button-demo-dog-poop"
             >
               <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center" style={{ borderColor: "#1E88E5" }}>
                   <Dog className="w-10 h-10" style={{ color: "#1E88E5" }} />
                 </div>
               </div>
@@ -220,7 +220,7 @@ export default function Home() {
           style={{
             background: "#1E88E5",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255, 255, 255, 0.2)"
+            border: "1px solid white"
           }}
         >
           <p className="text-sm text-white" data-testid="text-instructions">
