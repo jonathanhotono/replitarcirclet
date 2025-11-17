@@ -7,7 +7,7 @@ import ObjectIndicator from "@/components/ObjectIndicator";
 import ChatOverlay from "@/components/ChatOverlay";
 import { getObjectByQRCode } from "@/lib/objectData";
 import { ChatMessage, ObjectData, QuickAction } from "@shared/schema";
-import logoUrl from "@assets/circle_t_logo_1763352209894.jpeg";
+import logoUrl from "@assets/generated_images/Circle_T_transparent_logo_8f632cde.png";
 
 export default function Home() {
   const [showScanner, setShowScanner] = useState(false);
