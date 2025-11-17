@@ -169,57 +169,47 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* Graffiti Card */}
             <button
-              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
-              style={{
-                backgroundColor: "#1E88E5",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                backdropFilter: "blur(10px)",
-                color: "white"
-              }}
+              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
               onClick={() => startQuickDemo("graffiti")}
               data-testid="button-demo-graffiti"
             >
-              <div className="text-5xl mb-3">🎨</div>
-              <div className="text-white font-semibold text-lg mb-1">Graffiti</div>
-              <div className="text-white text-sm">Removal & Reporting</div>
+              <div className="flex justify-center mb-4">
+                <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center">
+                  <div className="text-3xl">🎨</div>
+                </div>
+              </div>
+              <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Graffiti</div>
+              <div className="text-gray-700 text-sm">Removal & Reporting</div>
             </button>
 
             {/* Syringe Card */}
             <button
-              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
-              style={{
-                backgroundColor: "#1E88E5",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                backdropFilter: "blur(10px)",
-                color: "white"
-              }}
+              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
               onClick={() => startQuickDemo("syringe")}
               data-testid="button-demo-syringe"
             >
-              <div className="flex justify-center mb-3">
-                <Syringe className="w-12 h-12 text-white" />
+              <div className="flex justify-center mb-4">
+                <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center">
+                  <Syringe className="w-10 h-10" style={{ color: "#1E88E5" }} />
+                </div>
               </div>
-              <div className="text-white font-semibold text-lg mb-1">Syringe</div>
-              <div className="text-white text-sm">Safe Disposal</div>
+              <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Syringe</div>
+              <div className="text-gray-700 text-sm">Safe Disposal</div>
             </button>
 
             {/* Dog Waste Card */}
             <button
-              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95"
-              style={{
-                backgroundColor: "#1E88E5",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-                backdropFilter: "blur(10px)",
-                color: "white"
-              }}
+              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
               onClick={() => startQuickDemo("dog-poop")}
               data-testid="button-demo-dog-poop"
             >
-              <div className="flex justify-center mb-3">
-                <Dog className="w-12 h-12 text-white" />
+              <div className="flex justify-center mb-4">
+                <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center">
+                  <Dog className="w-10 h-10" style={{ color: "#1E88E5" }} />
+                </div>
               </div>
-              <div className="text-white font-semibold text-lg mb-1">Dog Waste</div>
-              <div className="text-white text-sm">Cleanup Guide</div>
+              <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Dog Waste</div>
+              <div className="text-gray-700 text-sm">Cleanup Guide</div>
             </button>
           </div>
         </div>
