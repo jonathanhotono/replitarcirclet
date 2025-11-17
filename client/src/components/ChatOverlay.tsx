@@ -27,31 +27,22 @@ export default function ChatOverlay({
       className="fixed top-32 left-4 right-4 max-w-md mx-auto z-30 animate-in slide-in-from-top duration-300"
       data-testid="container-chat-overlay"
     >
-      <div
-        className="rounded-2xl overflow-hidden"
-        style={{
-          backdropFilter: "blur(16px)",
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
-          border: "1px solid rgba(255, 255, 255, 0.2)"
-        }}
-      >
-        <div className="flex items-center justify-between px-4 py-3">
-          <span className="font-semibold text-white text-sm" data-testid="text-chat-title">
-            {objectName} Info
-          </span>
+      <div className="space-y-3">
+        <div className="flex items-center justify-end px-2">
           <Button
             size="icon"
             variant="ghost"
             onClick={onClose}
             className="text-white hover:bg-white/20 h-8 w-8"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
             data-testid="button-close-chat"
           >
             <X className="w-4 h-4" />
           </Button>
         </div>
 
-        <ScrollArea className="max-h-[50vh] px-4 pb-3">
-          <div className="space-y-2">
+        <ScrollArea className="max-h-[50vh]">
+          <div className="space-y-2 px-2">
             {messages.map((message) => (
               <MessageBubble
                 key={message.id}
@@ -63,7 +54,7 @@ export default function ChatOverlay({
           </div>
         </ScrollArea>
 
-        <div className="px-4 pb-4 pt-2">
+        <div className="px-2">
           <QuickActionChips
             actions={quickActions}
             onActionClick={onActionClick}

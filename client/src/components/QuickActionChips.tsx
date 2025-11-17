@@ -10,18 +10,18 @@ interface QuickActionChipsProps {
 
 export default function QuickActionChips({ actions, onActionClick, accentColor }: QuickActionChipsProps) {
   return (
-    <ScrollArea className="w-full whitespace-nowrap" data-testid="container-quick-actions">
-      <div className="flex gap-2 p-1">
+    <ScrollArea className="w-full" data-testid="container-quick-actions">
+      <div className="flex gap-2 pb-2">
         {actions.map((action) => (
           <Button
             key={action.id}
-            variant="outline"
             size="sm"
             onClick={() => onActionClick(action)}
-            className="rounded-full px-4 shrink-0 hover-elevate active-elevate-2"
+            className="rounded-full px-4 shrink-0 text-white font-medium text-xs whitespace-nowrap"
             style={{
-              borderColor: accentColor,
-              color: accentColor
+              backgroundColor: "rgba(0, 0, 0, 0.6)",
+              border: `2px solid ${accentColor}`,
+              backdropFilter: "blur(8px)"
             }}
             data-testid={`button-action-${action.id}`}
           >
@@ -29,7 +29,7 @@ export default function QuickActionChips({ actions, onActionClick, accentColor }
           </Button>
         ))}
       </div>
-      <ScrollBar orientation="horizontal" />
+      <ScrollBar orientation="horizontal" className="h-1" />
     </ScrollArea>
   );
 }
