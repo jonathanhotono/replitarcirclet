@@ -9,6 +9,7 @@ interface CameraViewProps {
 
 export interface CameraViewRef {
   capturePhoto: () => string | null;
+  stopStream: () => void;
 }
 
 const CameraView = forwardRef<CameraViewRef, CameraViewProps>(({ showCamera, children }, ref) => {
@@ -30,8 +31,17 @@ const CameraView = forwardRef<CameraViewRef, CameraViewProps>(({ showCamera, chi
       
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       return canvas.toDataURL('image/jpeg', 0.8);
+    },
+    stopStream: () => {
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+        setStream(null);
+      }
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
     }
-  }));
+  }), [stream]);
 
   useEffect(() => {
     if (showCamera) {

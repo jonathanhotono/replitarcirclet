@@ -92,6 +92,40 @@ export default function Home() {
     };
   }, []);
 
+  const startCooldown = () => {
+    // Clear any existing cooldown timers first
+    if (pauseIntervalRef.current) {
+      clearInterval(pauseIntervalRef.current);
+      pauseIntervalRef.current = null;
+    }
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+      pauseTimeoutRef.current = null;
+    }
+    
+    setScanningPaused(true);
+    setPauseTimeRemaining(30);
+    
+    pauseIntervalRef.current = setInterval(() => {
+      setPauseTimeRemaining((prev) => {
+        if (prev === null || prev <= 1) {
+          return 0; // Clamp at zero
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    pauseTimeoutRef.current = setTimeout(() => {
+      setScanningPaused(false);
+      setPauseTimeRemaining(null);
+      if (pauseIntervalRef.current) {
+        clearInterval(pauseIntervalRef.current);
+        pauseIntervalRef.current = null;
+      }
+      console.log("[Home] Scanning cooldown complete - ready to scan again");
+    }, 30000); // 30 seconds = 30000ms
+  };
+
   const handleScan = (qrCode: string) => {
     console.log("QR Code scanned:", qrCode);
     const object = getObjectByQRCode(qrCode);
@@ -102,7 +136,10 @@ export default function Home() {
       
       // For Circle T logo, show the iframe chatbot
       if (object.type === "circle-t-logo") {
+        cameraRef.current?.stopStream(); // Stop the camera stream
+        setShowCamera(false); // Ensure camera is off
         setShowCircleTChatbot(true);
+        startCooldown(); // Apply cooldown for Circle T
       } else {
         setShowCamera(true);
         const initialMessages = [
@@ -163,6 +200,7 @@ export default function Home() {
   const handleCloseCircleTChatbot = () => {
     setShowCircleTChatbot(false);
     setDetectedObject(null);
+    setShowCamera(false); // Ensure camera stays off
     
     // If scanning was paused and user closes chatbot, keep it paused
     if (scanningPaused && pauseTimeRemaining !== null) {
@@ -250,6 +288,8 @@ export default function Home() {
       
       // For Circle T logo, show the iframe chatbot instead of regular chat
       if (object.type === "circle-t-logo") {
+        cameraRef.current?.stopStream(); // Stop the camera stream
+        setShowCamera(false); // Ensure camera is off
         setShowCircleTChatbot(true);
       } else {
         const initialMessages = [
@@ -265,37 +305,7 @@ export default function Home() {
       
       // Apply 30-second cooldown for syringe, pen, and circle-t-logo
       if (object.type === "syringe" || object.type === "pen" || object.type === "circle-t-logo") {
-        // Clear any existing cooldown timers first
-        if (pauseIntervalRef.current) {
-          clearInterval(pauseIntervalRef.current);
-          pauseIntervalRef.current = null;
-        }
-        if (pauseTimeoutRef.current) {
-          clearTimeout(pauseTimeoutRef.current);
-          pauseTimeoutRef.current = null;
-        }
-        
-        setScanningPaused(true);
-        setPauseTimeRemaining(30);
-        
-        pauseIntervalRef.current = setInterval(() => {
-          setPauseTimeRemaining((prev) => {
-            if (prev === null || prev <= 1) {
-              return 0; // Clamp at zero
-            }
-            return prev - 1;
-          });
-        }, 1000);
-        
-        pauseTimeoutRef.current = setTimeout(() => {
-          setScanningPaused(false);
-          setPauseTimeRemaining(null);
-          if (pauseIntervalRef.current) {
-            clearInterval(pauseIntervalRef.current);
-            pauseIntervalRef.current = null;
-          }
-          console.log("[Home] Scanning cooldown complete - ready to scan again");
-        }, 30000); // 30 seconds = 30000ms
+        startCooldown();
       }
     }
   };
