@@ -91,9 +91,12 @@ export default function DetectionOverlay({
           </Button>
         </div>
 
-        {/* Bottom Detection UI - Full Width, 15% Height */}
+        {/* Spacer to push bottom UI down */}
+        <div className="flex-1" />
+
+        {/* Bottom Detection UI - Full Width, Fixed Height */}
         <div
-          className="w-full h-[15vh] flex items-center justify-center px-4"
+          className="w-full flex items-center justify-center px-4 py-4 min-h-[15vh]"
           style={{ backdropFilter: "blur(20px)", backgroundColor: "rgba(0,0,0,0.5)" }}
         >
           {isPaused && !showConfirmation ? (
