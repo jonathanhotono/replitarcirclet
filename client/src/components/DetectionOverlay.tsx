@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Camera, X, Loader2, Check, ScanLine } from "lucide-react";
 import { DetectionResult } from "@/hooks/useObjectDetection";
-import syringeImage from "@assets/Syringe.H03.2k_1763447760772.png";
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
 
@@ -90,30 +89,6 @@ export default function DetectionOverlay({
           >
             <X className="w-5 h-5" />
           </Button>
-        </div>
-
-        {/* Center - 3D Overlays Only */}
-        <div className="flex-1 flex items-center justify-center relative">
-          {/* 3D Syringe Model Overlay - Shows when syringe detected */}
-          {lastResult && lastResult.objectType === "syringe" && showConfirmation && (
-            <div 
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              style={{
-                animation: "fadeIn 0.5s ease-in-out"
-              }}
-              data-testid="overlay-syringe-3d"
-            >
-              <img 
-                src={syringeImage} 
-                alt="Syringe 3D Model"
-                className="w-64 h-64 object-contain drop-shadow-2xl"
-                style={{
-                  filter: "drop-shadow(0 10px 30px rgba(0,0,0,0.5))",
-                  animation: "pulse 2s ease-in-out infinite"
-                }}
-              />
-            </div>
-          )}
         </div>
 
         {/* Bottom Detection UI - Full Width, 15% Height */}
