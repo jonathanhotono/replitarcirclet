@@ -38,15 +38,31 @@ export default function Home() {
   useEffect(() => {
     if (detectionMode && showCamera) {
       let mounted = true;
+      let attempts = 0;
+      const maxAttempts = 20; // Try for up to 2 seconds
       
-      // Wait for video element to be ready
-      const timer = setTimeout(() => {
+      // Wait for video element to be ready with polling
+      const checkVideo = () => {
         const videoElement = document.querySelector('video') as HTMLVideoElement;
-        if (mounted && videoElement && videoElement.readyState >= 2) {
-          console.log("[Home] Starting continuous detection");
-          startContinuous(videoElement);
+        
+        if (!mounted) {
+          return;
         }
-      }, 500);
+        
+        if (videoElement && videoElement.readyState >= 2) {
+          console.log("[Home] Video ready, starting continuous detection");
+          startContinuous(videoElement);
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          console.log(`[Home] Waiting for video... attempt ${attempts}/${maxAttempts}`);
+          setTimeout(checkVideo, 100);
+        } else {
+          console.error("[Home] Video element not ready after max attempts");
+        }
+      };
+      
+      // Start checking after a short delay
+      const timer = setTimeout(checkVideo, 200);
       
       return () => {
         mounted = false;
