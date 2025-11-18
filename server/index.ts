@@ -5,8 +5,9 @@ import { setupVite, serveStatic, log } from "./vite";
 const app = express();
 
 // Trust proxy for correct IP detection when behind Replit's proxy/CDN
-// This is crucial for rate limiting to work correctly
-app.set("trust proxy", true);
+// This is crucial for rate limiting and geolocation to work correctly
+// Using 1 means we trust the first proxy (Replit's edge)
+app.set("trust proxy", 1);
 
 declare module 'http' {
   interface IncomingMessage {
