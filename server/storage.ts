@@ -1,7 +1,7 @@
-import { type User, type InsertUser, type Incident, type InsertIncident, type DetectionEvent, type InsertDetectionEvent } from "@shared/schema";
+import { type User, type InsertUser, type Incident, type InsertIncident, type DetectionEvent, type InsertDetectionEvent, type Contact, type InsertContact } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from "./db";
-import { users, incidents, detectionEvents } from "@shared/schema";
+import { users, incidents, detectionEvents, contacts } from "@shared/schema";
 import { eq, desc } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
@@ -15,6 +15,8 @@ export interface IStorage {
   getAllIncidents(): Promise<Incident[]>;
   deleteIncident(id: number): Promise<void>;
   createDetectionEvent(event: InsertDetectionEvent): Promise<DetectionEvent>;
+  createContact(contact: InsertContact): Promise<Contact>;
+  getAllContacts(): Promise<Contact[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -56,6 +58,14 @@ export class MemStorage implements IStorage {
   async createDetectionEvent(event: InsertDetectionEvent): Promise<DetectionEvent> {
     throw new Error("Database storage required for detection events");
   }
+
+  async createContact(contact: InsertContact): Promise<Contact> {
+    throw new Error("Database storage required for contacts");
+  }
+
+  async getAllContacts(): Promise<Contact[]> {
+    throw new Error("Database storage required for contacts");
+  }
 }
 
 export class DbStorage implements IStorage {
@@ -90,6 +100,15 @@ export class DbStorage implements IStorage {
   async createDetectionEvent(event: InsertDetectionEvent): Promise<DetectionEvent> {
     const [newEvent] = await db.insert(detectionEvents).values(event).returning();
     return newEvent;
+  }
+
+  async createContact(contact: InsertContact): Promise<Contact> {
+    const [newContact] = await db.insert(contacts).values(contact).returning();
+    return newContact;
+  }
+
+  async getAllContacts(): Promise<Contact[]> {
+    return await db.select().from(contacts).orderBy(desc(contacts.timestamp));
   }
 }
 

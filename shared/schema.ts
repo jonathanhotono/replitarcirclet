@@ -60,6 +60,27 @@ export const insertDetectionEventSchema = detectionEventBaseSchema.omit({
 export type InsertDetectionEvent = z.infer<typeof insertDetectionEventSchema>;
 export type DetectionEvent = typeof detectionEvents.$inferSelect;
 
+export const contacts = pgTable("contacts", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  name: text("name").notNull(),
+  company: text("company").notNull(),
+  email: text("email").notNull(),
+  message: text("message").notNull(),
+  timestamp: timestamp("timestamp").notNull().defaultNow(),
+});
+
+const contactBaseSchema = createInsertSchema(contacts, {
+  email: z.string().email("Please enter a valid email address"),
+});
+
+export const insertContactSchema = contactBaseSchema.omit({
+  id: true,
+  timestamp: true,
+});
+
+export type InsertContact = z.infer<typeof insertContactSchema>;
+export type Contact = typeof contacts.$inferSelect;
+
 export type ObjectType = "graffiti" | "syringe" | "dog-poop" | "water-bottle" | "circle-t-logo";
 
 export interface DetectedObject {

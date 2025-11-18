@@ -1,7 +1,7 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertIncidentSchema, insertDetectionEventSchema } from "@shared/schema";
+import { insertIncidentSchema, insertDetectionEventSchema, insertContactSchema } from "@shared/schema";
 import { db } from "./db";
 import rateLimit from "express-rate-limit";
 import geoip from "geoip-lite";
@@ -297,6 +297,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(500).json({ 
         error: "Failed to delete incident",
+        details: process.env.NODE_ENV === "development" ? errorMessage : undefined
+      });
+    }
+  });
+
+  // Contact Routes (Circle T contact form)
+  app.post("/api/contacts", createIncidentLimiter, async (req, res) => {
+    try {
+      const validatedData = insertContactSchema.parse(req.body);
+      const contact = await storage.createContact(validatedData);
+      res.status(201).json(contact);
+    } catch (error) {
+      console.error("Error creating contact:", error);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorStack = error instanceof Error ? error.stack : undefined;
+      
+      console.error("Full error details:", {
+        message: errorMessage,
+        stack: errorStack,
+        data: req.body
+      });
+      
+      res.status(400).json({ 
+        error: "Failed to submit contact form",
+        details: process.env.NODE_ENV === "development" ? errorMessage : undefined
+      });
+    }
+  });
+
+  app.get("/api/contacts", async (req, res) => {
+    try {
+      const contacts = await storage.getAllContacts();
+      res.json(contacts);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      const errorStack = error instanceof Error ? error.stack : undefined;
+      
+      console.error("Full error details:", {
+        message: errorMessage,
+        stack: errorStack
+      });
+      
+      res.status(500).json({ 
+        error: "Failed to fetch contacts",
         details: process.env.NODE_ENV === "development" ? errorMessage : undefined
       });
     }

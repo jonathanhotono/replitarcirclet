@@ -6,6 +6,7 @@ import QRScanner from "@/components/QRScanner";
 import CameraView, { CameraViewRef } from "@/components/CameraView";
 import ChatOverlay from "@/components/ChatOverlay";
 import SubmissionForm from "@/components/SubmissionForm";
+import ContactForm from "@/components/ContactForm";
 import DetectionOverlay from "@/components/DetectionOverlay";
 import { getObjectByQRCode } from "@/lib/objectData";
 import { ChatMessage, ObjectData, QuickAction } from "@shared/schema";
@@ -23,6 +24,7 @@ export default function Home() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [showCamera, setShowCamera] = useState(false);
   const [showSubmissionForm, setShowSubmissionForm] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(false);
   const [detectionMode, setDetectionMode] = useState(false);
   
   const { detect, isDetecting, lastResult, isActive, startContinuous, stopContinuous } = useObjectDetection({
@@ -122,9 +124,9 @@ export default function Home() {
       return;
     }
     
-    // Check if this is a mailto link
-    if (action.response.startsWith("mailto:")) {
-      window.location.href = action.response;
+    // Check if this is the Circle T Connect button
+    if (action.id === "contact" || action.label.toLowerCase() === "connect") {
+      setShowContactForm(true);
       return;
     }
     
@@ -284,6 +286,11 @@ export default function Home() {
             objectData={detectedObject}
             cameraRef={cameraRef}
             onClose={() => setShowSubmissionForm(false)}
+          />
+        )}
+        {showContactForm && (
+          <ContactForm
+            onClose={() => setShowContactForm(false)}
           />
         )}
       </CameraView>
