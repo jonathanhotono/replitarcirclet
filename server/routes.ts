@@ -16,14 +16,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         timestamp: new Date().toISOString()
       });
     } catch (error) {
+      // Log full error details to server logs for debugging
       console.error("Database health check failed:", error);
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
       const errorStack = error instanceof Error ? error.stack : undefined;
       
+      console.error("Full health check error details:", {
+        message: errorMessage,
+        stack: errorStack
+      });
+      
+      // Only expose generic error in production, detailed error in development
       res.status(503).json({ 
         status: "unhealthy", 
         database: "disconnected",
-        error: errorMessage,
+        error: process.env.NODE_ENV === "development" ? errorMessage : "Database connection failed",
         stack: process.env.NODE_ENV === "development" ? errorStack : undefined,
         timestamp: new Date().toISOString()
       });
