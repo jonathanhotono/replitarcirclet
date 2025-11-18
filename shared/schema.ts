@@ -60,7 +60,7 @@ export const insertDetectionEventSchema = detectionEventBaseSchema.omit({
 export type InsertDetectionEvent = z.infer<typeof insertDetectionEventSchema>;
 export type DetectionEvent = typeof detectionEvents.$inferSelect;
 
-export type ObjectType = "graffiti" | "syringe" | "dog-poop" | "circle-t-logo";
+export type ObjectType = "graffiti" | "syringe" | "dog-poop" | "water-bottle" | "circle-t-logo";
 
 export interface DetectedObject {
   type: ObjectType;

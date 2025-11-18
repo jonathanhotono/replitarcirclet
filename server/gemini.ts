@@ -16,7 +16,7 @@ export interface DetectedObjectInfo {
 }
 
 export interface DetectionResult {
-  objectType: "graffiti" | "syringe" | "dog-poop" | "circle-t-logo" | "unknown";
+  objectType: "graffiti" | "syringe" | "dog-poop" | "water-bottle" | "circle-t-logo" | "unknown";
   confidence: number;
   explanation: string;
   otherObjects: DetectedObjectInfo[];
@@ -30,13 +30,14 @@ PRIMARY TASK: Check if it contains any of these municipal objects:
 1. Graffiti (spray paint, vandalism on walls/surfaces)
 2. Syringe (needle, medical waste)
 3. Dog waste (dog poop, feces)
-4. Circle T Logo (a circular logo with the letter T, blue branding, council logo)
+4. Water bottle or drink bottle (plastic bottles, beverage containers)
+5. Circle T Logo (a circular logo with the letter T, blue branding, council logo)
 
-SECONDARY TASK: ALWAYS identify ALL other objects you see in the scene (bottles, cups, phones, computers, desks, walls, trees, roads, buildings, people, vehicles, signs, furniture, etc.)
+SECONDARY TASK: ALWAYS identify ALL other objects you see in the scene (cups, phones, computers, desks, walls, trees, roads, buildings, people, vehicles, signs, furniture, etc.)
 
 Respond with ONLY a JSON object in this exact format:
 {
-  "objectType": "graffiti" | "syringe" | "dog-poop" | "circle-t-logo" | "unknown",
+  "objectType": "graffiti" | "syringe" | "dog-poop" | "water-bottle" | "circle-t-logo" | "unknown",
   "confidence": 0-100,
   "explanation": "brief explanation of what you see",
   "otherObjects": [
@@ -50,7 +51,7 @@ If municipal object found: Set objectType to the found object.
 If NO municipal object found: 
   - Set objectType to "unknown"
   - Set confidence to 95 (you're confident no municipal objects exist)
-  - In explanation, mention what you DO see (e.g., "Water bottle and desk visible, no municipal objects")
+  - In explanation, mention what you DO see
   - MUST populate otherObjects with everything visible in scene`;
 
     const response = await ai.models.generateContent({

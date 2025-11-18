@@ -31,6 +31,7 @@ export default function DetectionOverlay({
       case "graffiti": return "Graffiti";
       case "syringe": return "Syringe";
       case "dog-poop": return "Dog Waste";
+      case "water-bottle": return "Water Bottle";
       case "circle-t-logo": return "Circle T Logo";
       default: return "Unknown";
     }
@@ -186,7 +187,7 @@ export default function DetectionOverlay({
                   Point at Object
                 </p>
                 <p className="text-white/70 text-sm">
-                  Graffiti • Syringes • Dog Waste
+                  Graffiti • Syringes • Dog Waste • Water Bottles
                 </p>
               </div>
             </div>
@@ -277,7 +278,7 @@ export default function DetectionOverlay({
                 Point camera at object
               </p>
               <p className="text-white/70 text-sm mb-6">
-                Supports: Graffiti, Syringes, Dog Waste
+                Supports: Graffiti, Syringes, Dog Waste, Water Bottles
               </p>
               <Button
                 size="lg"

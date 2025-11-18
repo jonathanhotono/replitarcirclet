@@ -103,6 +103,40 @@ export const OBJECT_DATABASE: Record<string, ObjectData> = {
       "education": "Leave educational flyer about responsible pet ownership. Include information about free bag dispensers. List nearby designated dog waste bins."
     }
   },
+  "water-bottle": {
+    type: "water-bottle",
+    name: "Water Bottle",
+    icon: "♻️",
+    accentColor: "hsl(190, 70%, 50%)",
+    greeting: "Water bottle detected. See recycling and disposal guidelines below.",
+    quickActions: [
+      {
+        id: "disposal",
+        label: "What do I do?",
+        response: "Check if bottle is empty. Remove cap and place in yellow recycling bin if clean. Dispose in general waste if contaminated with food or liquids. Crush bottles to save space."
+      },
+      {
+        id: "recycling",
+        label: "Recycling guidelines",
+        response: "Plastic bottles (PET/HDPE) go in recycling bin. Must be empty and rinsed. Remove caps (separate recycling). Flatten to reduce volume. Glass bottles to glass recycling if available."
+      },
+      {
+        id: "location",
+        label: "Report litter",
+        response: "Document location with GPS and photo. If single item, collect and dispose immediately. Multiple bottles may indicate dumping - report to compliance team. Check for nearby bin overflow."
+      },
+      {
+        id: "bins",
+        label: "Bin maintenance",
+        response: "Check nearby bins aren't full. Empty recycling bins when 80% full. Ensure bin signage is clear. Report damaged or missing bins. Clean bottle residue monthly."
+      }
+    ],
+    responses: {
+      "park": "Park area: Collect scattered bottles during morning rounds. Check picnic areas and playgrounds first. Increase bin capacity in high-use areas during summer.",
+      "event": "Post-event cleanup: Systematic sweep in grid pattern. Separate recyclable from contaminated bottles. Document quantity for event management feedback.",
+      "repeat": "Repeat dumping location: Install additional signage. Request CCTV if budget allows. Schedule more frequent patrols. Consider extra bin placement."
+    }
+  },
   "circle-t-logo": {
     type: "circle-t-logo",
     name: "Circle T Logo",
