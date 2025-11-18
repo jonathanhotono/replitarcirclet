@@ -74,9 +74,20 @@ function melbourneOnly(req: Request, res: Response, next: NextFunction) {
     return next();
   }
   
-  // Check if from Australia and Victoria (Melbourne region)
-  if (geoData?.country === 'AU' && geoData?.region === 'VIC') {
+  // Check if from Australia, Victoria region, and Melbourne city
+  // Note: geoip-lite may return different city variations
+  const isAustralia = geoData?.country === 'AU';
+  const isVictoria = geoData?.region === 'VIC';
+  const city = geoData?.city ?? '';
+  const isMelbourne = city.toLowerCase().includes('melbourne');
+  
+  if (isAustralia && isVictoria && isMelbourne) {
     return next();
+  }
+  
+  // Log warning if city data is missing for monitoring
+  if (isAustralia && isVictoria && !city) {
+    console.warn(`[Geo] Missing city data for Victorian IP ${clientIp}`);
   }
   
   // Log blocked access attempt
