@@ -141,31 +141,6 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Main Action Card */}
-        <div 
-          className="rounded-3xl p-8"
-          style={{
-            background: "#1E88E5",
-            backdropFilter: "blur(20px)",
-            border: "1px solid white",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
-          }}
-        >
-          <button
-            className="w-full rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
-            onClick={() => setShowScanner(true)}
-            data-testid="button-scan-qr"
-          >
-            <div className="flex justify-center mb-4">
-              <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center" style={{ borderColor: "#1E88E5" }}>
-                <QrCode className="w-10 h-10" style={{ color: "#1E88E5" }} />
-              </div>
-            </div>
-            <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Scan QR Code</div>
-            <div className="text-gray-700 text-sm">Start scanning objects</div>
-          </button>
-        </div>
-
         {/* Demo Grid */}
         <div 
           className="rounded-3xl p-6"
