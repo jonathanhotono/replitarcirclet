@@ -19,7 +19,6 @@ export default function ObjectIndicator({ objectName, icon, accentColor }: Objec
           border: "2px solid #1E88E5"
         }}
       >
-        <span className="text-2xl mr-2" data-testid="text-object-icon">{icon}</span>
         <span className="font-bold text-lg mr-2" style={{ color: "#1E88E5" }} data-testid="text-object-name">{objectName}</span>
         <CheckCircle2 className="w-5 h-5" style={{ color: "#1E88E5" }} data-testid="icon-check" />
       </div>
