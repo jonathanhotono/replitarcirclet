@@ -378,7 +378,7 @@ export default function Home() {
             />
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3" data-testid="text-app-title">
-            Council AR Assistant
+            AR Assistant
           </h1>
           <p className="text-white text-lg" data-testid="text-app-description">
             Smart Object Recognition & Guidance System

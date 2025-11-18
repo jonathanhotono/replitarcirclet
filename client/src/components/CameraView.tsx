@@ -95,7 +95,7 @@ const CameraView = forwardRef<CameraViewRef, CameraViewProps>(({ showCamera, chi
         style={{ backdropFilter: "blur(10px)", backgroundColor: "rgba(0,0,0,0.3)" }}
       >
         <span className="text-white font-semibold text-lg" data-testid="text-app-title">
-          Council AR Assistant
+          AR Assistant
         </span>
         <Button
           size="icon"

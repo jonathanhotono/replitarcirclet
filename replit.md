@@ -1,4 +1,4 @@
-# Council AR Assistant - Object Recognition Tool
+# AR Assistant - Object Recognition Tool
 
 ## Overview
 
