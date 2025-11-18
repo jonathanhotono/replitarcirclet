@@ -17,7 +17,6 @@ export default function Home() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [showCamera, setShowCamera] = useState(false);
   const [showSubmissionForm, setShowSubmissionForm] = useState(false);
-  const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
 
   const handleScan = (qrCode: string) => {
     console.log("QR Code scanned:", qrCode);
@@ -45,11 +44,6 @@ export default function Home() {
     
     // Check if this is a report action
     if (action.label.toLowerCase().includes("report")) {
-      // Capture photo from camera
-      if (cameraRef.current) {
-        const photo = cameraRef.current.capturePhoto();
-        setCapturedPhoto(photo);
-      }
       setShowSubmissionForm(true);
       return;
     }
@@ -63,11 +57,6 @@ export default function Home() {
         timestamp: new Date()
       }
     ]);
-  };
-
-  const handleFormClose = () => {
-    setShowSubmissionForm(false);
-    setCapturedPhoto(null); // Clear the photo when form closes
   };
 
   const handleCloseChat = () => {
@@ -115,8 +104,8 @@ export default function Home() {
         {showSubmissionForm && (
           <SubmissionForm
             objectData={detectedObject}
-            capturedPhoto={capturedPhoto}
-            onClose={handleFormClose}
+            cameraRef={cameraRef}
+            onClose={() => setShowSubmissionForm(false)}
           />
         )}
       </CameraView>
