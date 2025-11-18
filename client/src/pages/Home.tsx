@@ -4,7 +4,6 @@ import { QrCode, Syringe, Dog, SprayCan } from "lucide-react";
 import { Link } from "wouter";
 import QRScanner from "@/components/QRScanner";
 import CameraView, { CameraViewRef } from "@/components/CameraView";
-import ObjectIndicator from "@/components/ObjectIndicator";
 import ChatOverlay from "@/components/ChatOverlay";
 import SubmissionForm from "@/components/SubmissionForm";
 import { getObjectByQRCode } from "@/lib/objectData";
@@ -89,11 +88,6 @@ export default function Home() {
   if (detectedObject && showCamera) {
     return (
       <CameraView ref={cameraRef} showCamera={true}>
-        <ObjectIndicator
-          objectName={detectedObject.name}
-          icon={detectedObject.icon}
-          accentColor={detectedObject.accentColor}
-        />
         <ChatOverlay
           objectName={detectedObject.name}
           accentColor={detectedObject.accentColor}
