@@ -29,9 +29,11 @@ export const incidents = pgTable("incidents", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const insertIncidentSchema = createInsertSchema(incidents, {
+const incidentBaseSchema = createInsertSchema(incidents, {
   timestamp: z.coerce.date(),
-}).omit({
+});
+
+export const insertIncidentSchema = incidentBaseSchema.omit({
   id: true,
   createdAt: true,
 });
@@ -48,7 +50,9 @@ export const detectionEvents = pgTable("detection_events", {
   timestamp: timestamp("timestamp").notNull().defaultNow(),
 });
 
-export const insertDetectionEventSchema = createInsertSchema(detectionEvents).omit({
+const detectionEventBaseSchema = createInsertSchema(detectionEvents);
+
+export const insertDetectionEventSchema = detectionEventBaseSchema.omit({
   id: true,
   timestamp: true,
 });

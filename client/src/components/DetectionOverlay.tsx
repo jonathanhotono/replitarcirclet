@@ -153,9 +153,32 @@ export default function DetectionOverlay({
               <p className="text-white font-bold text-3xl mb-2">
                 {getObjectLabel(lastResult.objectType)}
               </p>
-              <p className="text-white text-lg mb-6">
+              <p className="text-white text-lg mb-4">
                 {lastResult.confidence}% confident
               </p>
+              
+              {/* Display other detected objects */}
+              {lastResult.otherObjects && lastResult.otherObjects.length > 0 && (
+                <div className="mb-6 text-left">
+                  <p className="text-white/80 text-xs mb-2 font-semibold">Also detected in scene:</p>
+                  <div className="flex flex-wrap gap-1">
+                    {lastResult.otherObjects.slice(0, 6).map((obj, idx) => (
+                      <span
+                        key={idx}
+                        className="text-white/70 text-xs px-2 py-1 rounded-full"
+                        style={{
+                          backgroundColor: "rgba(255, 255, 255, 0.2)",
+                          backdropFilter: "blur(10px)"
+                        }}
+                        data-testid={`tag-other-object-${idx}`}
+                      >
+                        {obj.name} ({obj.confidence}%)
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
               <Button
                 size="lg"
                 className="w-full bg-white hover:bg-gray-100 text-lg font-bold py-6"

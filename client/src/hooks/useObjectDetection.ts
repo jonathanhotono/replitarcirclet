@@ -2,10 +2,16 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { apiRequest } from "@/lib/queryClient";
 import type { ObjectType } from "@shared/schema";
 
+export interface DetectedObjectInfo {
+  name: string;
+  confidence: number;
+}
+
 export interface DetectionResult {
   objectType: ObjectType | "unknown";
   confidence: number;
   explanation: string;
+  otherObjects?: DetectedObjectInfo[];
 }
 
 export interface UseObjectDetectionOptions {

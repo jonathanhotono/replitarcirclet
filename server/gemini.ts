@@ -10,10 +10,16 @@ const ai = new GoogleGenAI({
   },
 });
 
+export interface DetectedObjectInfo {
+  name: string;
+  confidence: number;
+}
+
 export interface DetectionResult {
   objectType: "graffiti" | "syringe" | "dog-poop" | "circle-t-logo" | "unknown";
   confidence: number;
   explanation: string;
+  otherObjects: DetectedObjectInfo[];
 }
 
 export async function detectObject(imageBase64: string): Promise<DetectionResult> {
@@ -28,11 +34,16 @@ Respond with ONLY a JSON object in this exact format:
 {
   "objectType": "graffiti" | "syringe" | "dog-poop" | "circle-t-logo" | "unknown",
   "confidence": 0-100,
-  "explanation": "brief explanation"
+  "explanation": "brief explanation",
+  "otherObjects": [
+    {"name": "object name", "confidence": 0-100}
+  ]
 }
 
-If the image contains multiple objects, choose the most prominent one.
-If none of these objects are present, use "unknown" with low confidence.`;
+For "otherObjects", list ALL other significant objects you see in the image (walls, trees, roads, buildings, people, vehicles, signs, etc.) with their confidence levels. Include at least 3-5 other objects if visible.
+
+If the image contains multiple municipal objects, choose the most prominent one for "objectType".
+If none of the municipal objects are present, use "unknown" with low confidence.`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
@@ -63,12 +74,22 @@ If none of these objects are present, use "unknown" with low confidence.`;
     const result = JSON.parse(jsonText) as DetectionResult;
     
     // Validate the response
-    if (!result.objectType || !result.confidence) {
+    if (!result.objectType || result.confidence === undefined) {
       throw new Error("Invalid response format from Gemini");
     }
     
     // Ensure confidence is in valid range
     result.confidence = Math.max(0, Math.min(100, result.confidence));
+    
+    // Ensure otherObjects exists and validate each item
+    if (!result.otherObjects) {
+      result.otherObjects = [];
+    } else {
+      result.otherObjects = result.otherObjects.map(obj => ({
+        name: obj.name,
+        confidence: Math.max(0, Math.min(100, obj.confidence))
+      }));
+    }
     
     return result;
   } catch (error) {
@@ -78,7 +99,8 @@ If none of these objects are present, use "unknown" with low confidence.`;
     return {
       objectType: "unknown",
       confidence: 0,
-      explanation: "Error analyzing image: " + (error instanceof Error ? error.message : "Unknown error")
+      explanation: "Error analyzing image: " + (error instanceof Error ? error.message : "Unknown error"),
+      otherObjects: []
     };
   }
 }
