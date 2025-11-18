@@ -94,7 +94,7 @@ export default function Home() {
         }
       ];
       
-      // Add extra messages with chatbot link for Circle T logo
+      // Add extra messages for Circle T logo
       if (object.type === "circle-t-logo") {
         initialMessages.push(
           {
@@ -107,12 +107,6 @@ export default function Home() {
             id: "3",
             role: "bot" as const,
             content: "We deliver business outcomes to digitally transform the global workplace.",
-            timestamp: new Date()
-          },
-          {
-            id: "4",
-            role: "bot" as const,
-            content: "Chat with Circle T Smart Assistant: https://www.circlet.com.au/showcase/Smart-QnA/",
             timestamp: new Date()
           }
         );
@@ -244,7 +238,7 @@ export default function Home() {
         }
       ];
       
-      // Add extra messages with chatbot link for Circle T logo
+      // Add extra messages for Circle T logo
       if (object.type === "circle-t-logo") {
         initialMessages.push(
           {
@@ -257,12 +251,6 @@ export default function Home() {
             id: "3",
             role: "bot" as const,
             content: "We deliver business outcomes to digitally transform the global workplace.",
-            timestamp: new Date()
-          },
-          {
-            id: "4",
-            role: "bot" as const,
-            content: "Chat with Circle T Smart Assistant: https://www.circlet.com.au/showcase/Smart-QnA/",
             timestamp: new Date()
           }
         );

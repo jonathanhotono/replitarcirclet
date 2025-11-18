@@ -139,10 +139,10 @@ export const OBJECT_DATABASE: Record<string, ObjectData> = {
   },
   "circle-t-logo": {
     type: "circle-t-logo",
-    name: "Circle T Logo",
+    name: "Circle T",
     icon: "🎉",
     accentColor: "hsl(200, 80%, 45%)",
-    greeting: "🎉 Circle T Logo detected! You found the easter egg!",
+    greeting: "🎉 Circle T detected! You found the easter egg!",
     quickActions: [
       {
         id: "celebrate",
