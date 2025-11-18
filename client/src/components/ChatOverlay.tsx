@@ -22,6 +22,11 @@ export default function ChatOverlay({
   onActionClick,
   onClose,
 }: ChatOverlayProps) {
+  // Find the report action
+  const reportAction = quickActions.find(action => action.label.toLowerCase().includes('report'));
+  // Filter out report actions from the quick actions chips
+  const nonReportActions = quickActions.filter(action => !action.label.toLowerCase().includes('report'));
+
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-30 animate-in slide-in-from-bottom duration-300 px-4 pb-4"
@@ -39,6 +44,23 @@ export default function ChatOverlay({
       >
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-white font-bold text-lg">{objectName}</h3>
+          
+          {/* Report Button */}
+          {reportAction && (
+            <Button
+              onClick={() => onActionClick(reportAction)}
+              className="rounded-full px-6 py-2 font-medium text-sm transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: "#1E88E5",
+                border: "2px solid white",
+                color: "white"
+              }}
+              data-testid={`button-action-${reportAction.id}`}
+            >
+              {reportAction.label}
+            </Button>
+          )}
+
           <Button
             size="icon"
             variant="ghost"
@@ -66,7 +88,7 @@ export default function ChatOverlay({
 
         <div className="flex-shrink-0">
           <QuickActionChips
-            actions={quickActions}
+            actions={nonReportActions}
             onActionClick={onActionClick}
             accentColor={accentColor}
           />
