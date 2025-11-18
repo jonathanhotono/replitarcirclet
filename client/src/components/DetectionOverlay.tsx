@@ -72,18 +72,13 @@ export default function DetectionOverlay({
     // Continuous Real-time Detection Mode
     return (
       <div className="absolute inset-0 flex flex-col" data-testid="container-detection-overlay">
-        {/* Header */}
-        <div
-          className="p-4 flex items-center justify-between"
-          style={{ backdropFilter: "blur(10px)", backgroundColor: "rgba(0,0,0,0.3)" }}
-        >
-          <span className="text-white font-semibold text-lg" data-testid="text-detection-mode">
-            Real-time Detection
-          </span>
+        {/* Close Button - Top Right */}
+        <div className="absolute top-4 right-4 z-50">
           <Button
             size="icon"
             variant="ghost"
             className="text-white hover:bg-white/20"
+            style={{ backdropFilter: "blur(10px)", backgroundColor: "rgba(0,0,0,0.3)" }}
             onClick={onClose}
             data-testid="button-close-detection"
           >
@@ -91,7 +86,7 @@ export default function DetectionOverlay({
           </Button>
         </div>
 
-        {/* Center - Real-time Detection Overlay */}
+        {/* Center - 3D Overlays Only */}
         <div className="flex-1 flex items-center justify-center relative">
           {/* 3D Syringe Model Overlay - Shows when syringe detected */}
           {lastResult && lastResult.objectType === "syringe" && showConfirmation && (
@@ -113,124 +108,88 @@ export default function DetectionOverlay({
               />
             </div>
           )}
+        </div>
 
+        {/* Bottom Detection UI - Full Width, 15% Height */}
+        <div
+          className="w-full h-[15vh] flex items-center justify-center px-4"
+          style={{ backdropFilter: "blur(20px)", backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
           {isDetecting ? (
-            <div
-              className="rounded-2xl p-6 text-center"
-              style={{
-                backdropFilter: "blur(20px)",
-                backgroundColor: "rgba(0,0,0,0.4)",
-                border: "2px solid rgba(255,255,255,0.3)"
-              }}
-              data-testid="container-scanning"
-            >
-              <ScanLine className="w-16 h-16 text-white mx-auto mb-3 animate-pulse" />
-              <p className="text-white font-bold text-xl">
+            <div className="flex items-center gap-4" data-testid="container-scanning">
+              <ScanLine className="w-8 h-8 text-white animate-pulse" />
+              <p className="text-white font-bold text-lg">
                 Scanning...
               </p>
             </div>
           ) : lastResult && showConfirmation ? (
-            <div
-              className="rounded-3xl p-8 text-center max-w-sm mx-4 relative z-10 pointer-events-auto"
-              style={{
-                backdropFilter: "blur(20px)",
-                backgroundColor: 
-                  lastResult.objectType === "syringe" 
-                    ? "rgba(239, 68, 68, 0.9)"  // Red for syringe
-                    : lastResult.objectType === "circle-t-logo"
-                    ? "rgba(30, 136, 229, 0.95)" // Brighter blue for Circle T
-                    : "rgba(30, 136, 229, 0.9)", // Blue for others
-                border: "2px solid white",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
-              }}
-              data-testid="container-detected"
-            >
-              <div className="w-20 h-20 rounded-full bg-white mx-auto mb-4 flex items-center justify-center">
-                <Check className="w-10 h-10" style={{ 
-                  color: lastResult.objectType === "syringe" ? "#EF4444" : "#1E88E5" 
-                }} />
-              </div>
-              <p className="text-white font-bold text-3xl mb-2">
-                {getObjectLabel(lastResult.objectType)}
-              </p>
-              <p className="text-white text-lg mb-4">
-                {lastResult.confidence}% confident
-              </p>
-              
-              {/* Display other detected objects */}
-              {lastResult.otherObjects && lastResult.otherObjects.length > 0 && (
-                <div className="mb-6 text-left">
-                  <p className="text-white/80 text-xs mb-2 font-semibold">Also detected in scene:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {lastResult.otherObjects.slice(0, 6).map((obj, idx) => (
-                      <span
-                        key={idx}
-                        className="text-white/70 text-xs px-2 py-1 rounded-full"
-                        style={{
-                          backgroundColor: "rgba(255, 255, 255, 0.2)",
-                          backdropFilter: "blur(10px)"
-                        }}
-                        data-testid={`tag-other-object-${idx}`}
-                      >
-                        {obj.name} ({obj.confidence}%)
-                      </span>
-                    ))}
-                  </div>
+            <div className="w-full flex items-center justify-between gap-4" data-testid="container-detected">
+              <div className="flex items-center gap-4 flex-1 min-w-0">
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ 
+                    backgroundColor: lastResult.objectType === "syringe" ? "#EF4444" : "#1E88E5" 
+                  }}
+                >
+                  <Check className="w-6 h-6 text-white" />
                 </div>
-              )}
-              
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-bold text-xl truncate">
+                    {getObjectLabel(lastResult.objectType)}
+                  </p>
+                  <p className="text-white/80 text-sm">
+                    {lastResult.confidence}% confident
+                  </p>
+                  {lastResult.otherObjects && lastResult.otherObjects.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {lastResult.otherObjects.slice(0, 3).map((obj, idx) => (
+                        <span
+                          key={idx}
+                          className="text-white/60 text-xs px-2 py-0.5 rounded-full"
+                          style={{
+                            backgroundColor: "rgba(255, 255, 255, 0.15)"
+                          }}
+                          data-testid={`tag-other-object-${idx}`}
+                        >
+                          {obj.name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
               <Button
                 size="lg"
-                className="w-full bg-white hover:bg-gray-100 text-lg font-bold py-6"
+                className="bg-white hover:bg-gray-100 font-bold flex-shrink-0"
                 style={{ 
                   color: lastResult.objectType === "syringe" ? "#EF4444" : "#1E88E5" 
                 }}
                 onClick={() => onConfirm && onConfirm(lastResult.objectType)}
                 data-testid="button-select-object"
               >
-                Select This Object
+                Select
               </Button>
             </div>
-          ) : (
-            <div
-              className="rounded-2xl p-6 text-center"
-              style={{
-                backdropFilter: "blur(20px)",
-                backgroundColor: "rgba(0,0,0,0.4)",
-                border: "2px solid rgba(255,255,255,0.3)"
-              }}
-              data-testid="container-instructions"
-            >
-              <Camera className="w-16 h-16 text-white mx-auto mb-3" />
-              <p className="text-white font-bold text-xl mb-2">
-                Point at Object
-              </p>
-              <p className="text-white/80 text-sm">
-                Graffiti • Syringes • Dog Waste
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Bottom Status Bar */}
-        <div
-          className="p-4 text-center"
-          style={{ backdropFilter: "blur(10px)", backgroundColor: "rgba(0,0,0,0.3)" }}
-        >
-          {lastResult && lastResult.objectType === "unknown" && !isDetecting && (
+          ) : lastResult && lastResult.objectType === "unknown" && !isDetecting ? (
             <p className="text-yellow-300 text-sm" data-testid="text-unknown-object">
               Unknown object - move camera to try again
             </p>
-          )}
-          {lastResult && lastResult.objectType !== "unknown" && lastResult.confidence < 60 && !isDetecting && (
+          ) : lastResult && lastResult.objectType !== "unknown" && lastResult.confidence < 60 && !isDetecting ? (
             <p className="text-yellow-300 text-sm" data-testid="text-low-confidence">
               Low confidence - move closer or try different angle
             </p>
-          )}
-          {isActive && !isDetecting && !lastResult && (
-            <p className="text-white/70 text-sm">
-              Move camera around to detect objects
-            </p>
+          ) : (
+            <div className="flex items-center gap-4" data-testid="container-instructions">
+              <Camera className="w-8 h-8 text-white" />
+              <div>
+                <p className="text-white font-bold text-lg">
+                  Point at Object
+                </p>
+                <p className="text-white/70 text-sm">
+                  Graffiti • Syringes • Dog Waste
+                </p>
+              </div>
+            </div>
           )}
         </div>
       </div>
