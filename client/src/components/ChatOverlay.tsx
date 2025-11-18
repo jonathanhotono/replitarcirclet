@@ -30,7 +30,7 @@ export default function ChatOverlay({
   const nonReportActions = quickActions.filter(action => !action.label.toLowerCase().includes('report'));
   
   const handleCircleTClick = () => {
-    window.open('https://www.circlet.com.au/showcase/Smart-QnA/', '_blank');
+    window.open('https://www.circlet.com.au/showcase/Smart-QnA/?msg=tell+me+about+circle+t+solutions', '_blank');
   };
 
   return (
@@ -51,21 +51,8 @@ export default function ChatOverlay({
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-white font-bold text-lg">{objectName}</h3>
           
-          {/* Circle T Smart Assistant Button */}
-          {isCircleT ? (
-            <Button
-              onClick={handleCircleTClick}
-              className="rounded-full px-6 py-2 font-medium text-sm transition-all hover:scale-105 active:scale-95"
-              style={{
-                background: "#1E88E5",
-                border: "2px solid white",
-                color: "white"
-              }}
-              data-testid="button-circle-t-chatbot"
-            >
-              Chat with Circle T Smart Assistant
-            </Button>
-          ) : reportAction && (
+          {/* Report Button for non-Circle T objects */}
+          {!isCircleT && reportAction && (
             <Button
               onClick={() => onActionClick(reportAction)}
               className="rounded-full px-6 py-2 font-medium text-sm transition-all hover:scale-105 active:scale-95"
@@ -106,6 +93,22 @@ export default function ChatOverlay({
         </ScrollArea>
 
         <div className="flex-shrink-0">
+          {/* Circle T Smart Assistant Button - Bottom Left */}
+          {isCircleT && (
+            <Button
+              onClick={handleCircleTClick}
+              className="rounded-full px-6 py-3 font-medium text-sm transition-all hover:scale-105 active:scale-95 mb-3"
+              style={{
+                background: "#1E88E5",
+                border: "2px solid white",
+                color: "white"
+              }}
+              data-testid="button-circle-t-chatbot"
+            >
+              Chat with Circle T Smart Assistant
+            </Button>
+          )}
+          
           <QuickActionChips
             actions={nonReportActions}
             onActionClick={onActionClick}
