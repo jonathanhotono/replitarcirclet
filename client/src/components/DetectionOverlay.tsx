@@ -13,6 +13,7 @@ interface DetectionOverlayProps {
   onConfirm?: (objectType: string) => void;
   continuousMode?: boolean;
   isActive?: boolean;
+  isPaused?: boolean;
 }
 
 export default function DetectionOverlay({
@@ -22,7 +23,8 @@ export default function DetectionOverlay({
   onClose,
   onConfirm,
   continuousMode = false,
-  isActive = false
+  isActive = false,
+  isPaused = false
 }: DetectionOverlayProps) {
   const showConfirmation = lastResult && lastResult.objectType !== "unknown" && lastResult.confidence >= 60;
   
@@ -119,7 +121,14 @@ export default function DetectionOverlay({
           className="w-full h-[15vh] flex items-center justify-center px-4"
           style={{ backdropFilter: "blur(20px)", backgroundColor: "rgba(0,0,0,0.5)" }}
         >
-          {isDetecting ? (
+          {isPaused && !showConfirmation ? (
+            <div className="flex items-center gap-4" data-testid="container-paused">
+              <div className="w-8 h-8 rounded-full border-4 border-white/30" />
+              <p className="text-white font-bold text-lg">
+                Scanning paused (30s)
+              </p>
+            </div>
+          ) : isDetecting ? (
             <div className="flex items-center gap-4" data-testid="container-scanning">
               <ScanLine className="w-8 h-8 text-white animate-pulse" />
               <p className="text-white font-bold text-lg">

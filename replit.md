@@ -94,14 +94,17 @@ Preferred communication style: Simple, everyday language.
 **AI Object Detection Flow**:
 1. User clicks "Detect Object (AI)" button
 2. Camera view opens with DetectionOverlay component
-3. User captures image via "Capture & Detect" button
+3. Continuous scanning begins automatically (every 3 seconds)
 4. Image sent to /api/detect endpoint with base64 encoding
 5. Gemini Vision API analyzes image and returns objectType (graffiti/syringe/dog-poop/pen/circle-t-logo/water-bottle/unknown) with confidence score (0-100)
 6. If confidence ≥60%: Shows confirmation dialog with detected object and confidence
-7. If confidence <60%: Shows low confidence warning with manual selection option
-8. If unknown object: Shows error message suggesting alternative methods
+   - **Scanning pauses for 30 seconds** after successful detection
+   - UI shows "Scanning paused (30s)" message during pause period
+   - After 30 seconds, scanning automatically resumes
+7. If confidence <60%: Shows low confidence warning with manual selection option (scanning continues)
+8. If unknown object: Shows error message suggesting alternative methods (scanning continues)
 9. On user confirmation:
-   - Circle T logo: Opens full-screen iframe with Circle T Smart QnA chatbot, stops camera stream
+   - Circle T logo: Shows chat interface with "Chat with Circle T Smart Assistant" button
    - Other objects: Opens chat interface with object-specific guidance
 10. Detection event logged to database for analytics (rounded confidence, known objects only)
 

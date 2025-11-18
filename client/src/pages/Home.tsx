@@ -18,6 +18,7 @@ import logoUrl from "@assets/ttt_1763355102252.png";
 export default function Home() {
   const cameraRef = useRef<CameraViewRef>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const pauseTimerRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
   
   const [showScanner, setShowScanner] = useState(false);
@@ -28,6 +29,7 @@ export default function Home() {
   const [showContactForm, setShowContactForm] = useState(false);
   const [detectionMode, setDetectionMode] = useState(false);
   const [showCircleTChatbot, setShowCircleTChatbot] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   
   const { detect, isDetecting, lastResult, isActive, startContinuous, stopContinuous } = useObjectDetection({
     continuous: true,
@@ -40,7 +42,7 @@ export default function Home() {
 
   // Start continuous detection when camera opens in detection mode
   useEffect(() => {
-    if (detectionMode && showCamera) {
+    if (detectionMode && showCamera && !isPaused) {
       let mounted = true;
       let attempts = 0;
       const maxAttempts = 20; // Try for up to 2 seconds
@@ -74,7 +76,37 @@ export default function Home() {
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detectionMode, showCamera]); // Removed startContinuous to prevent re-runs
+  }, [detectionMode, showCamera, isPaused]); // Added isPaused to dependencies
+
+  // Monitor detection results and pause for 30 seconds when object detected
+  useEffect(() => {
+    if (lastResult && lastResult.objectType !== "unknown" && lastResult.confidence >= 60 && isActive) {
+      console.log("[Home] Object detected, pausing scanning for 30 seconds");
+      
+      // Stop continuous detection
+      stopContinuous();
+      setIsPaused(true);
+      
+      // Clear any existing pause timer
+      if (pauseTimerRef.current) {
+        clearTimeout(pauseTimerRef.current);
+      }
+      
+      // Resume after 30 seconds
+      pauseTimerRef.current = setTimeout(() => {
+        console.log("[Home] Resuming scanning after 30 second pause");
+        setIsPaused(false);
+        pauseTimerRef.current = null;
+      }, 30000);
+    }
+    
+    return () => {
+      if (pauseTimerRef.current) {
+        clearTimeout(pauseTimerRef.current);
+        pauseTimerRef.current = null;
+      }
+    };
+  }, [lastResult, isActive, stopContinuous]);
 
   const handleScan = (qrCode: string) => {
     console.log("QR Code scanned:", qrCode);
@@ -291,6 +323,7 @@ export default function Home() {
           onConfirm={handleConfirmDetection}
           continuousMode={true}
           isActive={isActive}
+          isPaused={isPaused}
         />
       </CameraView>
     );
