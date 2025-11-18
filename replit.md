@@ -88,19 +88,21 @@ Preferred communication style: Simple, everyday language.
 1. User clicks "Scan QR Code" button
 2. Scanner detects QR code containing object identifier
 3. Application maps QR code to object data from static database (objectData.ts)
-4. Camera view activates with object indicator overlay
-5. Chat interface presents object-specific guidance and quick actions
+4. For Circle T logo: Opens full-screen iframe with Circle T Smart QnA chatbot
+5. For other objects: Camera view activates with object indicator overlay and chat interface presents object-specific guidance and quick actions
 
 **AI Object Detection Flow**:
 1. User clicks "Detect Object (AI)" button
 2. Camera view opens with DetectionOverlay component
 3. User captures image via "Capture & Detect" button
 4. Image sent to /api/detect endpoint with base64 encoding
-5. Gemini Vision API analyzes image and returns objectType (graffiti/syringe/dog-poop/unknown) with confidence score (0-100)
+5. Gemini Vision API analyzes image and returns objectType (graffiti/syringe/dog-poop/pen/circle-t-logo/water-bottle/unknown) with confidence score (0-100)
 6. If confidence ≥60%: Shows confirmation dialog with detected object and confidence
 7. If confidence <60%: Shows low confidence warning with manual selection option
 8. If unknown object: Shows error message suggesting alternative methods
-9. On user confirmation: Opens chat interface with object-specific guidance
+9. On user confirmation:
+   - Circle T logo: Opens full-screen iframe with Circle T Smart QnA chatbot, stops camera stream
+   - Other objects: Opens chat interface with object-specific guidance
 10. Detection event logged to database for analytics (rounded confidence, known objects only)
 
 **AI Integration Details**:
@@ -111,7 +113,16 @@ Preferred communication style: Simple, everyday language.
 - Confidence threshold: Auto-confirm ≥70%, manual confirm 60-69%, reject <60%
 - Analytics: Logs all successful detections with rounded confidence values
 
-**Object Database**: Static in-memory object definitions with pre-configured responses and quick actions for each object type (graffiti, syringe, dog waste).
+**Object Database**: Static in-memory object definitions with pre-configured responses and quick actions for each object type (graffiti, syringe, dog waste, pen).
+
+**Circle T Chatbot Integration**:
+- When Circle T logo is detected (via QR code or AI detection), the app displays Circle T's Smart QnA chatbot in a full-screen iframe
+- Iframe URL: https://www.circlet.com.au/showcase/Smart-QnA/?msg=tell+me+about+circle+t+solutions
+- Camera stream is explicitly stopped when the iframe opens to release hardware resources
+- IframeChatbot component provides full-screen overlay with close button
+- Sandbox attributes: allow-same-origin, allow-scripts, allow-forms, allow-popups, allow-popups-to-escape-sandbox
+- 30-second scanning cooldown applies after Circle T logo detection
+- Cooldown is consistently enforced via both QR scan and AI detection paths using shared startCooldown() function
 
 ### Authentication and Authorization
 
