@@ -83,13 +83,6 @@ export default function Home() {
     if (object) {
       setDetectedObject(object);
       setShowScanner(false);
-      
-      // For Circle T logo from QR scan, show chatbot (no confetti in QR mode)
-      if (object.type === "circle-t-logo") {
-        setShowCircleTChatbot(true);
-        return; // Don't show camera or messages
-      }
-      
       setShowCamera(true);
       
       const initialMessages = [
@@ -100,6 +93,30 @@ export default function Home() {
           timestamp: new Date()
         }
       ];
+      
+      // Add extra messages with chatbot link for Circle T logo
+      if (object.type === "circle-t-logo") {
+        initialMessages.push(
+          {
+            id: "2",
+            role: "bot" as const,
+            content: "Visit Circle T at www.circlet.com.au",
+            timestamp: new Date()
+          },
+          {
+            id: "3",
+            role: "bot" as const,
+            content: "We deliver business outcomes to digitally transform the global workplace.",
+            timestamp: new Date()
+          },
+          {
+            id: "4",
+            role: "bot" as const,
+            content: "Chat with Circle T Smart Assistant: https://www.circlet.com.au/showcase/Smart-QnA/",
+            timestamp: new Date()
+          }
+        );
+      }
       
       setMessages(initialMessages);
     } else {
@@ -173,6 +190,12 @@ export default function Home() {
             role: "bot" as const,
             content: "We deliver business outcomes to digitally transform the global workplace.",
             timestamp: new Date()
+          },
+          {
+            id: "4",
+            role: "bot" as const,
+            content: "Chat with Circle T Smart Assistant: https://www.circlet.com.au/showcase/Smart-QnA/",
+            timestamp: new Date()
           }
         );
       }
@@ -212,14 +235,6 @@ export default function Home() {
     if (object) {
       setDetectedObject(object);
       
-      // For Circle T logo, show the chatbot after confetti
-      if (object.type === "circle-t-logo") {
-        cameraRef.current?.stopStream(); // Stop the camera stream
-        setShowCamera(false); // Ensure camera is off
-        setShowCircleTChatbot(true);
-        return; // Don't set messages for Circle T logo
-      }
-      
       const initialMessages = [
         {
           id: "1",
@@ -228,6 +243,30 @@ export default function Home() {
           timestamp: new Date()
         }
       ];
+      
+      // Add extra messages with chatbot link for Circle T logo
+      if (object.type === "circle-t-logo") {
+        initialMessages.push(
+          {
+            id: "2",
+            role: "bot" as const,
+            content: "Visit Circle T at www.circlet.com.au",
+            timestamp: new Date()
+          },
+          {
+            id: "3",
+            role: "bot" as const,
+            content: "We deliver business outcomes to digitally transform the global workplace.",
+            timestamp: new Date()
+          },
+          {
+            id: "4",
+            role: "bot" as const,
+            content: "Chat with Circle T Smart Assistant: https://www.circlet.com.au/showcase/Smart-QnA/",
+            timestamp: new Date()
+          }
+        );
+      }
       
       setMessages(initialMessages);
     }
