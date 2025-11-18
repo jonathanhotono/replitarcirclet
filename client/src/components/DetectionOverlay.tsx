@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Camera, X, Loader2, Check, ScanLine } from "lucide-react";
 import { DetectionResult } from "@/hooks/useObjectDetection";
 import syringeImage from "@assets/Syringe.H03.2k_1763447760772.png";
+import penImage from "@assets/generated_images/3D_blue_ballpoint_pen_4f1e1f3e.png";
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
 
@@ -106,6 +107,27 @@ export default function DetectionOverlay({
               <img 
                 src={syringeImage} 
                 alt="Syringe 3D Model"
+                className="w-64 h-64 object-contain drop-shadow-2xl"
+                style={{
+                  filter: "drop-shadow(0 10px 30px rgba(0,0,0,0.5))",
+                  animation: "pulse 2s ease-in-out infinite"
+                }}
+              />
+            </div>
+          )}
+          
+          {/* 3D Pen Model Overlay - Shows when pen detected */}
+          {lastResult && lastResult.objectType === "pen" && showConfirmation && (
+            <div 
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{
+                animation: "fadeIn 0.5s ease-in-out"
+              }}
+              data-testid="overlay-pen-3d"
+            >
+              <img 
+                src={penImage} 
+                alt="Pen 3D Model"
                 className="w-64 h-64 object-contain drop-shadow-2xl"
                 style={{
                   filter: "drop-shadow(0 10px 30px rgba(0,0,0,0.5))",
