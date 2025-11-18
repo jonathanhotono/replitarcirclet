@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { QrCode, Syringe, Dog, SprayCan, Camera } from "lucide-react";
+import { QrCode, Syringe, Camera } from "lucide-react";
 import { Link } from "wouter";
 import QRScanner from "@/components/QRScanner";
 import CameraView, { CameraViewRef } from "@/components/CameraView";
@@ -511,25 +511,10 @@ export default function Home() {
             Test without detection
           </p>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {/* Graffiti Card */}
-            <button
-              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
-              onClick={() => startQuickDemo("graffiti")}
-              data-testid="button-demo-graffiti"
-            >
-              <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center" style={{ borderColor: "#1E88E5" }}>
-                  <SprayCan className="w-10 h-10" style={{ color: "#1E88E5" }} />
-                </div>
-              </div>
-              <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Graffiti</div>
-              <div className="text-gray-700 text-sm">Removal & Reporting</div>
-            </button>
-
+          <div className="flex justify-center">
             {/* Syringe Card */}
             <button
-              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
+              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white w-full sm:w-auto sm:min-w-[300px]"
               onClick={() => startQuickDemo("syringe")}
               data-testid="button-demo-syringe"
             >
@@ -540,21 +525,6 @@ export default function Home() {
               </div>
               <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Syringe</div>
               <div className="text-gray-700 text-sm">Safe Disposal</div>
-            </button>
-
-            {/* Dog Waste Card */}
-            <button
-              className="rounded-2xl p-6 text-center transition-all hover:scale-105 active:scale-95 bg-white"
-              onClick={() => startQuickDemo("dog-poop")}
-              data-testid="button-demo-dog-poop"
-            >
-              <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 rounded-full border-4 flex items-center justify-center" style={{ borderColor: "#1E88E5" }}>
-                  <Dog className="w-10 h-10" style={{ color: "#1E88E5" }} />
-                </div>
-              </div>
-              <div className="font-bold text-lg mb-2" style={{ color: "#1E88E5" }}>Dog Waste</div>
-              <div className="text-gray-700 text-sm">Cleanup Guide</div>
             </button>
           </div>
         </div>
