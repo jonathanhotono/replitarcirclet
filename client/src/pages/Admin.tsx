@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Incident } from "@shared/schema";
-import { ArrowLeft, MapPin, Clock, Camera, FileText, AlertCircle, Trash2 } from "lucide-react";
+import { ArrowLeft, MapPin, Clock, Camera, FileText, AlertCircle, Trash2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { queryClient, apiRequest } from "@/lib/queryClient";
@@ -109,6 +109,16 @@ export default function Admin() {
                 </h1>
                 <p className="text-white/90 mt-1">Incident Reports</p>
               </div>
+              <Link href="/contacts">
+                <Button
+                  variant="ghost"
+                  className="text-white hover:bg-white/20 gap-2"
+                  data-testid="button-view-contacts"
+                >
+                  <Mail className="w-5 h-5" />
+                  <span className="hidden sm:inline">Contact Submissions</span>
+                </Button>
+              </Link>
             </div>
             {incidents && (
               <div className="text-white w-full sm:w-auto">
