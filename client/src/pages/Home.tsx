@@ -8,6 +8,7 @@ import ChatOverlay from "@/components/ChatOverlay";
 import SubmissionForm from "@/components/SubmissionForm";
 import ContactForm from "@/components/ContactForm";
 import DetectionOverlay from "@/components/DetectionOverlay";
+import IframeChatbot from "@/components/IframeChatbot";
 import { getObjectByQRCode } from "@/lib/objectData";
 import { ChatMessage, ObjectData, QuickAction } from "@shared/schema";
 import { useObjectDetection } from "@/hooks/useObjectDetection";
@@ -30,6 +31,7 @@ export default function Home() {
   const [detectionMode, setDetectionMode] = useState(false);
   const [scanningPaused, setScanningPaused] = useState(false);
   const [pauseTimeRemaining, setPauseTimeRemaining] = useState<number | null>(null);
+  const [showCircleTChatbot, setShowCircleTChatbot] = useState(false);
   
   const { detect, isDetecting, lastResult, isActive, startContinuous, stopContinuous } = useObjectDetection({
     continuous: true,
@@ -97,35 +99,22 @@ export default function Home() {
     if (object) {
       setDetectedObject(object);
       setShowScanner(false);
-      setShowCamera(true);
       
-      const initialMessages = [
-        {
-          id: "1",
-          role: "bot" as const,
-          content: object.greeting,
-          timestamp: new Date()
-        }
-      ];
-      
+      // For Circle T logo, show the iframe chatbot
       if (object.type === "circle-t-logo") {
-        initialMessages.push(
+        setShowCircleTChatbot(true);
+      } else {
+        setShowCamera(true);
+        const initialMessages = [
           {
-            id: "2",
+            id: "1",
             role: "bot" as const,
-            content: "Visit Circle T at www.circlet.com.au",
-            timestamp: new Date()
-          },
-          {
-            id: "3",
-            role: "bot" as const,
-            content: "We deliver business outcomes to digitally transform the global workplace.",
+            content: object.greeting,
             timestamp: new Date()
           }
-        );
+        ];
+        setMessages(initialMessages);
       }
-      
-      setMessages(initialMessages);
     } else {
       console.error("Unknown object QR code");
     }
@@ -163,6 +152,19 @@ export default function Home() {
     setShowCamera(false);
     
     // If scanning was paused and user closes chat, keep it paused
+    if (scanningPaused && pauseTimeRemaining !== null) {
+      toast({
+        title: "Scanning Paused",
+        description: `Scanning will resume in ${pauseTimeRemaining} seconds`,
+      });
+    }
+  };
+
+  const handleCloseCircleTChatbot = () => {
+    setShowCircleTChatbot(false);
+    setDetectedObject(null);
+    
+    // If scanning was paused and user closes chatbot, keep it paused
     if (scanningPaused && pauseTimeRemaining !== null) {
       toast({
         title: "Scanning Paused",
@@ -246,30 +248,19 @@ export default function Home() {
     if (object) {
       setDetectedObject(object);
       
-      const initialMessages = [
-        {
-          id: "1",
-          role: "bot" as const,
-          content: object.greeting,
-          timestamp: new Date()
-        }
-      ];
-      
+      // For Circle T logo, show the iframe chatbot instead of regular chat
       if (object.type === "circle-t-logo") {
-        initialMessages.push(
+        setShowCircleTChatbot(true);
+      } else {
+        const initialMessages = [
           {
-            id: "2",
+            id: "1",
             role: "bot" as const,
-            content: "Visit Circle T at www.circlet.com.au",
-            timestamp: new Date()
-          },
-          {
-            id: "3",
-            role: "bot" as const,
-            content: "We deliver business outcomes to digitally transform the global workplace.",
+            content: object.greeting,
             timestamp: new Date()
           }
-        );
+        ];
+        setMessages(initialMessages);
       }
       
       // Apply 30-second cooldown for syringe, pen, and circle-t-logo
@@ -306,8 +297,6 @@ export default function Home() {
           console.log("[Home] Scanning cooldown complete - ready to scan again");
         }, 30000); // 30 seconds = 30000ms
       }
-      
-      setMessages(initialMessages);
     }
   };
 
@@ -320,6 +309,16 @@ export default function Home() {
 
   if (showScanner) {
     return <QRScanner onScan={handleScan} onClose={() => setShowScanner(false)} />;
+  }
+
+  if (showCircleTChatbot) {
+    return (
+      <IframeChatbot
+        url="https://www.circlet.com.au/showcase/Smart-QnA/?msg=tell+me+about+circle+t+solutions"
+        title="Circle T Smart Assistant"
+        onClose={handleCloseCircleTChatbot}
+      />
+    );
   }
 
   if (detectionMode && showCamera) {
