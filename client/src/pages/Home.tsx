@@ -256,10 +256,12 @@ export default function Home() {
             timestamp: new Date()
           }
         );
-        
-        // Pause scanning for 1 minute (60 seconds)
+      }
+      
+      // Apply 30-second cooldown for syringe, pen, and circle-t-logo
+      if (object.type === "syringe" || object.type === "pen" || object.type === "circle-t-logo") {
         setScanningPaused(true);
-        setPauseTimeRemaining(60);
+        setPauseTimeRemaining(30);
         
         const pauseInterval = setInterval(() => {
           setPauseTimeRemaining((prev) => {
@@ -275,7 +277,7 @@ export default function Home() {
           setPauseTimeRemaining(null);
           clearInterval(pauseInterval);
           console.log("[Home] Scanning cooldown complete - ready to scan again");
-        }, 60000); // 1 minute = 60000ms
+        }, 30000); // 30 seconds = 30000ms
       }
       
       setMessages(initialMessages);
