@@ -3,7 +3,7 @@ import { Camera, X, Loader2, Check, ScanLine } from "lucide-react";
 import { DetectionResult } from "@/hooks/useObjectDetection";
 import syringeImage from "@assets/Syringe.H03.2k_1763447760772.png";
 import confetti from "canvas-confetti";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface DetectionOverlayProps {
   isDetecting: boolean;
@@ -25,6 +25,7 @@ export default function DetectionOverlay({
   isActive = false
 }: DetectionOverlayProps) {
   const showConfirmation = lastResult && lastResult.objectType !== "unknown" && lastResult.confidence >= 60;
+  const [countdown, setCountdown] = useState<number | null>(null);
   
   const getObjectLabel = (objectType: string) => {
     switch(objectType) {
@@ -68,6 +69,36 @@ export default function DetectionOverlay({
       }());
     }
   }, [lastResult, showConfirmation]);
+
+  // Auto-transition for Circle T logo after 10 seconds
+  useEffect(() => {
+    if (lastResult && lastResult.objectType === "circle-t-logo" && showConfirmation && onConfirm) {
+      setCountdown(10);
+      
+      // Countdown interval
+      const countdownInterval = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev === null || prev <= 1) {
+            return null;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      // Auto-transition timer
+      const timer = setTimeout(() => {
+        onConfirm(lastResult.objectType);
+      }, 10000);
+
+      return () => {
+        clearTimeout(timer);
+        clearInterval(countdownInterval);
+        setCountdown(null);
+      };
+    } else {
+      setCountdown(null);
+    }
+  }, [lastResult, showConfirmation, onConfirm]);
 
   if (continuousMode) {
     // Continuous Real-time Detection Mode
@@ -168,7 +199,9 @@ export default function DetectionOverlay({
                 onClick={() => onConfirm && onConfirm(lastResult.objectType)}
                 data-testid="button-select-object"
               >
-                Select
+                {countdown !== null && lastResult.objectType === "circle-t-logo" 
+                  ? `Select (${countdown}s)` 
+                  : "Select"}
               </Button>
             </div>
           ) : lastResult && lastResult.objectType === "unknown" && !isDetecting ? (
