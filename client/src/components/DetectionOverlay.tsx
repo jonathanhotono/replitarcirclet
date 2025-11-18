@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Camera, X, Loader2, Check, ScanLine } from "lucide-react";
 import { DetectionResult } from "@/hooks/useObjectDetection";
+import syringeImage from "@assets/Syringe.H03.2k_1763447760772.png";
 
 interface DetectionOverlayProps {
   isDetecting: boolean;
@@ -56,7 +57,28 @@ export default function DetectionOverlay({
         </div>
 
         {/* Center - Real-time Detection Overlay */}
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center relative">
+          {/* 3D Syringe Model Overlay - Shows when syringe detected */}
+          {lastResult && lastResult.objectType === "syringe" && showConfirmation && (
+            <div 
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{
+                animation: "fadeIn 0.5s ease-in-out"
+              }}
+              data-testid="overlay-syringe-3d"
+            >
+              <img 
+                src={syringeImage} 
+                alt="Syringe 3D Model"
+                className="w-64 h-64 object-contain drop-shadow-2xl"
+                style={{
+                  filter: "drop-shadow(0 10px 30px rgba(0,0,0,0.5))",
+                  animation: "pulse 2s ease-in-out infinite"
+                }}
+              />
+            </div>
+          )}
+
           {isDetecting ? (
             <div
               className="rounded-2xl p-6 text-center"
@@ -74,17 +96,21 @@ export default function DetectionOverlay({
             </div>
           ) : lastResult && showConfirmation ? (
             <div
-              className="rounded-3xl p-8 text-center max-w-sm mx-4"
+              className="rounded-3xl p-8 text-center max-w-sm mx-4 relative z-10 pointer-events-auto"
               style={{
                 backdropFilter: "blur(20px)",
-                backgroundColor: "rgba(30, 136, 229, 0.9)",
+                backgroundColor: lastResult.objectType === "syringe" 
+                  ? "rgba(239, 68, 68, 0.9)"  // Red for syringe
+                  : "rgba(30, 136, 229, 0.9)", // Blue for others
                 border: "2px solid white",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)"
               }}
               data-testid="container-detected"
             >
               <div className="w-20 h-20 rounded-full bg-white mx-auto mb-4 flex items-center justify-center">
-                <Check className="w-10 h-10" style={{ color: "#1E88E5" }} />
+                <Check className="w-10 h-10" style={{ 
+                  color: lastResult.objectType === "syringe" ? "#EF4444" : "#1E88E5" 
+                }} />
               </div>
               <p className="text-white font-bold text-3xl mb-2">
                 {getObjectLabel(lastResult.objectType)}
@@ -95,7 +121,9 @@ export default function DetectionOverlay({
               <Button
                 size="lg"
                 className="w-full bg-white hover:bg-gray-100 text-lg font-bold py-6"
-                style={{ color: "#1E88E5" }}
+                style={{ 
+                  color: lastResult.objectType === "syringe" ? "#EF4444" : "#1E88E5" 
+                }}
                 onClick={() => onConfirm && onConfirm(lastResult.objectType)}
                 data-testid="button-select-object"
               >
