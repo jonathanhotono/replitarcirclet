@@ -68,6 +68,7 @@ Preferred communication style: Simple, everyday language.
 
 **Current Data Model**:
 - Users table with id (UUID), username (unique), and password fields
+- Detection events table (detectionEvents) tracking AI detection attempts with objectType, confidence (0-100), source, confirmed status, and timestamp
 - In-memory fallback storage implementation (MemStorage class) for development/testing
 
 **Type System**: 
@@ -79,14 +80,36 @@ Preferred communication style: Simple, everyday language.
 
 **Camera Access**: Web APIs (navigator.mediaDevices.getUserMedia) with environment-facing camera preference for mobile AR use cases.
 
-**QR Code Scanning**: html5-qrcode library for QR code detection and processing.
+**Object Detection Methods**:
+1. **QR Code Scanning** (html5-qrcode): Traditional QR code detection and processing
+2. **AI-Powered Detection** (Gemini Vision API): Real-time object recognition using Google's Gemini 2.5 Flash multimodal model
 
-**Object Detection Flow**:
-1. User initiates QR scanner
+**QR Code Detection Flow**:
+1. User clicks "Scan QR Code" button
 2. Scanner detects QR code containing object identifier
 3. Application maps QR code to object data from static database (objectData.ts)
 4. Camera view activates with object indicator overlay
 5. Chat interface presents object-specific guidance and quick actions
+
+**AI Object Detection Flow**:
+1. User clicks "Detect Object (AI)" button
+2. Camera view opens with DetectionOverlay component
+3. User captures image via "Capture & Detect" button
+4. Image sent to /api/detect endpoint with base64 encoding
+5. Gemini Vision API analyzes image and returns objectType (graffiti/syringe/dog-poop/unknown) with confidence score (0-100)
+6. If confidence ≥60%: Shows confirmation dialog with detected object and confidence
+7. If confidence <60%: Shows low confidence warning with manual selection option
+8. If unknown object: Shows error message suggesting alternative methods
+9. On user confirmation: Opens chat interface with object-specific guidance
+10. Detection event logged to database for analytics (rounded confidence, known objects only)
+
+**AI Integration Details**:
+- Model: Gemini 2.5 Flash (via Replit AI Integrations)
+- No API key required (billed to Replit credits)
+- Rate limiting: 30 detections per 15 minutes per IP address
+- Geolocation restricted: Melbourne, Australia only
+- Confidence threshold: Auto-confirm ≥70%, manual confirm 60-69%, reject <60%
+- Analytics: Logs all successful detections with rounded confidence values
 
 **Object Database**: Static in-memory object definitions with pre-configured responses and quick actions for each object type (graffiti, syringe, dog waste).
 
