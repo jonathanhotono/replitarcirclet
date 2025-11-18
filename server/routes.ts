@@ -65,7 +65,7 @@ function geolocate(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-// Middleware: Melbourne, Australia filter
+// Middleware: Australia-only filter (expanded from Melbourne-only for testing)
 function melbourneOnly(req: Request, res: Response, next: NextFunction) {
   const geoData = (req as any).geoip;
   const clientIp = (req as any).clientIp;
@@ -75,20 +75,11 @@ function melbourneOnly(req: Request, res: Response, next: NextFunction) {
     return next();
   }
   
-  // Check if from Australia, Victoria region, and Melbourne city
-  // Note: geoip-lite may return different city variations
+  // Allow all of Australia for testing
   const isAustralia = geoData?.country === 'AU';
-  const isVictoria = geoData?.region === 'VIC';
-  const city = geoData?.city ?? '';
-  const isMelbourne = city.toLowerCase().includes('melbourne');
   
-  if (isAustralia && isVictoria && isMelbourne) {
+  if (isAustralia) {
     return next();
-  }
-  
-  // Log warning if city data is missing for monitoring
-  if (isAustralia && isVictoria && !city) {
-    console.warn(`[Geo] Missing city data for Victorian IP ${clientIp}`);
   }
   
   // Log blocked access attempt
@@ -96,7 +87,7 @@ function melbourneOnly(req: Request, res: Response, next: NextFunction) {
   
   res.status(451).json({ 
     error: 'Geographic restriction',
-    message: 'This service is only available in Melbourne, Victoria, Australia.',
+    message: 'This service is only available in Australia.',
     yourLocation: {
       country: geoData?.country || 'Unknown',
       region: geoData?.region || 'Unknown',
