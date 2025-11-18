@@ -251,7 +251,7 @@ export default function Home() {
             Quick Demo
           </h2>
           <p className="text-sm text-white mb-6 text-center">
-            Test without QR codes
+            Test without detection
           </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
