@@ -43,7 +43,7 @@ export default function DetectionOverlay({
   useEffect(() => {
     if (lastResult && lastResult.objectType === "circle-t-logo" && showConfirmation) {
       // Multi-burst confetti celebration!
-      const duration = 5000;
+      const duration = 3000; // 3 seconds
       const end = Date.now() + duration;
 
       const colors = ['#1E88E5', '#4FC3F7', '#81D4FA', '#ffffff'];
@@ -71,10 +71,10 @@ export default function DetectionOverlay({
     }
   }, [lastResult, showConfirmation]);
 
-  // Auto-transition for Circle T logo after 10 seconds
+  // Auto-transition for Circle T logo after 3 seconds (when confetti ends)
   useEffect(() => {
     if (lastResult && lastResult.objectType === "circle-t-logo" && showConfirmation && onConfirm) {
-      setCountdown(10);
+      setCountdown(3);
       
       // Countdown interval
       const countdownInterval = setInterval(() => {
@@ -86,10 +86,10 @@ export default function DetectionOverlay({
         });
       }, 1000);
 
-      // Auto-transition timer
+      // Auto-transition timer - open chatbot after confetti
       const timer = setTimeout(() => {
         onConfirm(lastResult.objectType);
-      }, 10000);
+      }, 3000);
 
       return () => {
         clearTimeout(timer);
