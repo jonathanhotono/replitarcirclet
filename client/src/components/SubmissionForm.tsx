@@ -17,8 +17,10 @@ export default function SubmissionForm({ objectData, cameraRef, onClose }: Submi
   const [locationName, setLocationName] = useState<string>("Fetching location...");
   const [locationError, setLocationError] = useState(false);
   const [priority, setPriority] = useState<string>("priority1");
+  const [details, setDetails] = useState<string>("");
 
   const isGraffiti = objectData.type === "graffiti";
+  const maxDetailsLength = 256;
 
   useEffect(() => {
     // Get user's GPS coordinates
@@ -100,6 +102,7 @@ export default function SubmissionForm({ objectData, cameraRef, onClose }: Submi
         locationName: locationName,
         gpsCoordinates: gpsCoordinates,
         priority: isGraffiti ? priority : null,
+        details: details || null,
         photoUrl: capturedPhoto,
         timestamp: new Date(),
       };
@@ -279,6 +282,37 @@ export default function SubmissionForm({ objectData, cameraRef, onClose }: Submi
               </select>
             </div>
           )}
+
+          {/* Details */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 justify-between">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5" style={{ color: "#1E88E5" }} />
+                <label className="font-semibold text-gray-700" data-testid="label-details">
+                  Details
+                </label>
+              </div>
+              <span className="text-xs text-gray-500" data-testid="text-char-count">
+                {details.length}/{maxDetailsLength}
+              </span>
+            </div>
+            <textarea
+              value={details}
+              onChange={(e) => {
+                if (e.target.value.length <= maxDetailsLength) {
+                  setDetails(e.target.value);
+                }
+              }}
+              placeholder="Add notes about this incident (optional)"
+              className="w-full rounded-lg p-3 text-gray-900 resize-none"
+              style={{
+                background: "#f5f5f5",
+                border: "1px solid #e0e0e0",
+                minHeight: "100px"
+              }}
+              data-testid="textarea-details"
+            />
+          </div>
 
           {/* Photo */}
           <div className="space-y-2">

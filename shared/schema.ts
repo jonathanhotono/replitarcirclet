@@ -23,6 +23,7 @@ export const incidents = pgTable("incidents", {
   locationName: text("location_name").notNull(),
   gpsCoordinates: text("gps_coordinates").notNull(),
   priority: text("priority"),
+  details: varchar("details", { length: 256 }),
   photoUrl: text("photo_url"),
   timestamp: timestamp("timestamp").notNull().defaultNow(),
   createdAt: timestamp("created_at").notNull().defaultNow(),

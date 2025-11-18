@@ -172,6 +172,19 @@ export default function Admin() {
                         </p>
                       </div>
                     </div>
+
+                    {/* Details */}
+                    {incident.details && (
+                      <div className="mt-4">
+                        <div className="flex items-center gap-2 mb-1">
+                          <FileText className="w-4 h-4" style={{ color: "#1E88E5" }} />
+                          <span className="font-semibold text-gray-700">Details</span>
+                        </div>
+                        <p className="text-gray-700 ml-6 bg-gray-50 p-3 rounded-lg" data-testid={`incident-details-${incident.id}`}>
+                          {incident.details}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
