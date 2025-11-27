@@ -1,7 +1,12 @@
 import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { type Server } from "http";
+
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import. meta.url);
+const __dirname = path.dirname(__filename);
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -18,7 +23,7 @@ export async function setupVite(app: Express, server: Server) {
   // Dynamic imports - only loaded in development
   const { createServer: createViteServer, createLogger } = await import("vite");
   const { nanoid } = await import("nanoid");
-  const viteConfig = (await import("../vite.config")). default;
+  const viteConfig = (await import("../vite.config")).default;
   
   const viteLogger = createLogger();
 
@@ -29,10 +34,10 @@ export async function setupVite(app: Express, server: Server) {
   };
 
   const vite = await createViteServer({
-    ... viteConfig,
+    ...viteConfig,
     configFile: false,
     customLogger: {
-      ... viteLogger,
+      ...viteLogger,
       error: (msg, options) => {
         viteLogger.error(msg, options);
         process.exit(1);
@@ -48,14 +53,14 @@ export async function setupVite(app: Express, server: Server) {
 
     try {
       const clientTemplate = path.resolve(
-        import.meta.dirname,
+        __dirname,
         ". .",
         "client",
         "index.html",
       );
 
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template. replace(
+      template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx? v=${nanoid()}"`,
       );
@@ -69,17 +74,18 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  const distPath = path.resolve(import.meta.dirname, "public");
+  // Use __dirname instead of import.meta.dirname
+  const distPath = path.resolve(__dirname, "public");
 
-  if (!fs.existsSync(distPath)) {
+  if (! fs.existsSync(distPath)) {
     throw new Error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`,
     );
   }
 
-  app. use(express.static(distPath));
+  app.use(express. static(distPath));
 
   app.use("*", (_req, res) => {
-    res. sendFile(path. resolve(distPath, "index.html"));
+    res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
